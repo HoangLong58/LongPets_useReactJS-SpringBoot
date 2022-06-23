@@ -1,5 +1,6 @@
 package com.longpets.longpetsecommerce.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -9,6 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 public class AdminLogResponseDto {
     private Long logId;
+
     private String logContent;
-    private String logAvataraaaaa;
+
+    @JsonProperty("logAvatarAfterCustom")
+    private String logAvatar;
 }
