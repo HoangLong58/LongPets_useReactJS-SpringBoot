@@ -1,6 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -159,15 +159,19 @@ public class Pet {
     }
 
     @OneToMany(mappedBy = "petOrderDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<OrderDetail> orderDetails = new HashSet<>();
 
     @OneToMany(mappedBy = "petImage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Image> images = new HashSet<>();
 
-    public Pet(Long petId, String petName, String petGender, String petAge, String petVaccinated,
-            String petHealthWarranty, String petTitle, String petDescription, String petNote, Long petQuantity,
-            Long petPrice, Long petPriceDiscount, Category categoryPet) {
-        this.petId = petId;
+    public Pet() {
+    }
+
+    public Pet(String petName, String petGender, String petAge, String petVaccinated, String petHealthWarranty,
+               String petTitle, String petDescription, String petNote, Long petQuantity, Long petPrice,
+               Long petPriceDiscount, Category categoryPet) {
         this.petName = petName;
         this.petGender = petGender;
         this.petAge = petAge;
@@ -180,8 +184,5 @@ public class Pet {
         this.petPrice = petPrice;
         this.petPriceDiscount = petPriceDiscount;
         this.categoryPet = categoryPet;
-    }
-
-    public Pet() {
     }
 }

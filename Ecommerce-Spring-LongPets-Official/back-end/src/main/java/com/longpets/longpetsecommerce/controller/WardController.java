@@ -1,6 +1,5 @@
 package com.longpets.longpetsecommerce.controller;
 
-import com.longpets.longpetsecommerce.data.model.District;
 import com.longpets.longpetsecommerce.data.model.Ward;
 import com.longpets.longpetsecommerce.dto.response.WardResponeDto;
 import com.longpets.longpetsecommerce.service.WardService;

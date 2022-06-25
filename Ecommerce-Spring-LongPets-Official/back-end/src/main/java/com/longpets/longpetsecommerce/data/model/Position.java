@@ -1,6 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -46,14 +46,14 @@ public class Position {
     }
 
     @OneToMany(mappedBy = "positionEmployee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Employee> employees = new HashSet<>();
 
-    public Position(Long positionId, String positionName, Long positionSalaryFactor) {
-        this.positionId = positionId;
-        this.positionName = positionName;
-        this.positionSalaryFactor = positionSalaryFactor;
+    public Position() {
     }
 
-    public Position() {
+    public Position(String positionName, Long positionSalaryFactor) {
+        this.positionName = positionName;
+        this.positionSalaryFactor = positionSalaryFactor;
     }
 }

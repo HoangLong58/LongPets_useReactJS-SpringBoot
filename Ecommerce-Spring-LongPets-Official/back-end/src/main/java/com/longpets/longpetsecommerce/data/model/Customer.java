@@ -1,6 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -127,12 +127,15 @@ public class Customer {
     }
 
     @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
-    public Customer(Long customerId, String customerEmail, String customerPassword, String customerName,
-            Date customerBirthday, String customerGender, String customerPhone, String customerAddress,
-            String customerAvatar, Ward wardCustomer) {
-        this.customerId = customerId;
+    public Customer() {
+    }
+
+    public Customer(String customerEmail, String customerPassword, String customerName,
+                    Date customerBirthday, String customerGender, String customerPhone, String customerAddress,
+                    String customerAvatar, Ward wardCustomer) {
         this.customerEmail = customerEmail;
         this.customerPassword = customerPassword;
         this.customerName = customerName;
@@ -142,8 +145,5 @@ public class Customer {
         this.customerAddress = customerAddress;
         this.customerAvatar = customerAvatar;
         this.wardCustomer = wardCustomer;
-    }
-
-    public Customer() {
     }
 }

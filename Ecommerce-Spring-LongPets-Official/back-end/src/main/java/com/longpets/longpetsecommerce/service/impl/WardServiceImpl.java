@@ -1,6 +1,5 @@
 package com.longpets.longpetsecommerce.service.impl;
 
-import com.longpets.longpetsecommerce.data.model.District;
 import com.longpets.longpetsecommerce.data.model.Ward;
 import com.longpets.longpetsecommerce.data.repository.DistrictRepository;
 import com.longpets.longpetsecommerce.data.repository.WardRepository;
@@ -29,6 +28,7 @@ public class WardServiceImpl implements WardService {
         this.modelMapper = modelMapper;
     }
 
+//    Get all ward
     public List<Ward> getAllWards() {
         return this.wardRepository.findAllWard();
     }
@@ -42,9 +42,10 @@ public class WardServiceImpl implements WardService {
         return wardResponeDtos;
     }
 
+//    Get ward by ward_id
     @Override
     public WardResponeDto getWardById(String id) {
-        Optional<Ward> wardOptional = this.wardRepository.findById(id);
+        Optional<Ward> wardOptional = this.wardRepository.findWardById(id);
         Ward ward = wardOptional.get();
         return modelMapper.map(ward, WardResponeDto.class);
     }

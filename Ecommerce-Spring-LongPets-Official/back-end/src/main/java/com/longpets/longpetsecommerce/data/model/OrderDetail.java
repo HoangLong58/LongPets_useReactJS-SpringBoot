@@ -1,7 +1,5 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -56,8 +54,8 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id",
-                referencedColumnName = "pet_id",
-                foreignKey = @ForeignKey(name = "orderDetail_pet_fk1"))
+            referencedColumnName = "pet_id",
+            foreignKey = @ForeignKey(name = "orderDetail_pet_fk1"))
     private Pet petOrderDetail;
 
     public Pet getPetOrderDetail() {
@@ -70,28 +68,27 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id",
-                referencedColumnName = "order_id",
-                foreignKey = @ForeignKey(name = "orderDetail_order_fk2"))
+            referencedColumnName = "order_id",
+            foreignKey = @ForeignKey(name = "orderDetail_order_fk2"))
     private Order orderOrderDetail;
-
-    public OrderDetail(Long orderDetailId, Long orderDetailPrice, Long orderDetailQuantity, Long orderDetailTotal,
-            Pet petOrderDetail, Order orderOrderDetail) {
-        this.orderDetailId = orderDetailId;
-        this.orderDetailPrice = orderDetailPrice;
-        this.orderDetailQuantity = orderDetailQuantity;
-        this.orderDetailTotal = orderDetailTotal;
-        this.petOrderDetail = petOrderDetail;
-        this.orderOrderDetail = orderOrderDetail;
-    }
-
-    public OrderDetail() {
-    }
 
     public Order getOrderOrderDetail() {
         return orderOrderDetail;
     }
 
     public void setOrderOrderDetail(Order orderOrderDetail) {
+        this.orderOrderDetail = orderOrderDetail;
+    }
+
+    public OrderDetail() {
+    }
+
+    public OrderDetail(Long orderDetailPrice, Long orderDetailQuantity, Long orderDetailTotal,
+                       Pet petOrderDetail, Order orderOrderDetail) {
+        this.orderDetailPrice = orderDetailPrice;
+        this.orderDetailQuantity = orderDetailQuantity;
+        this.orderDetailTotal = orderDetailTotal;
+        this.petOrderDetail = petOrderDetail;
         this.orderOrderDetail = orderOrderDetail;
     }
 }

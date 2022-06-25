@@ -1,10 +1,8 @@
 package com.longpets.longpetsecommerce.controller;
 
 import com.longpets.longpetsecommerce.data.model.District;
-import com.longpets.longpetsecommerce.data.model.Ward;
-import com.longpets.longpetsecommerce.dto.response.WardResponeDto;
+import com.longpets.longpetsecommerce.dto.response.FindAllWardByDistrictIdResponseDto;
 import com.longpets.longpetsecommerce.service.DistrictService;
-import com.longpets.longpetsecommerce.service.WardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,8 @@ public class DistrictController {
     }
 
     @PostMapping
-    List<WardResponeDto> getAllWardOfDistrict(@RequestBody String districtId) {
-        return this.districtService.getAllWardOfDistrict(districtId);
+    List<FindAllWardByDistrictIdResponseDto> getAllWardOfDistrict() {
+        return this.districtService.getAllWardOfDistrict("250");
     }
 
     @Autowired

@@ -1,6 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -35,13 +35,13 @@ public class OrderStatus {
     }
 
     @OneToMany(mappedBy = "orderStatusOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
-    public OrderStatus(Long orderStatusId, String orderStatusName) {
-        this.orderStatusId = orderStatusId;
-        this.orderStatusName = orderStatusName;
+    public OrderStatus() {
     }
 
-    public OrderStatus() {
+    public OrderStatus(String orderStatusName) {
+        this.orderStatusName = orderStatusName;
     }
 }

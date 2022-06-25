@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface WardService {
     public List<WardResponeDto> getAllWardsDto();
+
     List<Ward> getAllWards();
 
     public WardResponeDto getWardById(String id);

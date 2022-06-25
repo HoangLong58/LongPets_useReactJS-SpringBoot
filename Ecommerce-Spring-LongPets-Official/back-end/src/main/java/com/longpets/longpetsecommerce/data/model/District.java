@@ -1,8 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-//import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -48,8 +46,8 @@ public class District {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id",
-                referencedColumnName = "city_id",
-                foreignKey = @ForeignKey(name = "district_city_fk1"))
+            referencedColumnName = "city_id",
+            foreignKey = @ForeignKey(name = "district_city_fk1"))
     private City cityDistrict;
 
     public City getCityDistrict() {
@@ -61,6 +59,7 @@ public class District {
     }
 
     @OneToMany(mappedBy = "districtWard", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
 //    @JsonManagedReference
     private Set<Ward> wards = new HashSet<>();
 

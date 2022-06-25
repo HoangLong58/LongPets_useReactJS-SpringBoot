@@ -1,7 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -47,8 +46,8 @@ public class Ward {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id",
-                referencedColumnName = "district_id",
-                foreignKey = @ForeignKey(name = "ward_district_fk1"))
+            referencedColumnName = "district_id",
+            foreignKey = @ForeignKey(name = "ward_district_fk1"))
 //    @JsonBackReference
     private District districtWard;
 
@@ -61,21 +60,24 @@ public class Ward {
     }
 
     @OneToMany(mappedBy = "wardEmployee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Employee> employees = new HashSet<>();
 
     @OneToMany(mappedBy = "wardOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     @OneToMany(mappedBy = "wardCustomer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Customer> customers = new HashSet<>();
+
+    public Ward() {
+    }
 
     public Ward(String wardId, String wardName, String wardType, District districtWard) {
         this.wardId = wardId;
         this.wardName = wardName;
         this.wardType = wardType;
         this.districtWard = districtWard;
-    }
-
-    public Ward() {
     }
 }

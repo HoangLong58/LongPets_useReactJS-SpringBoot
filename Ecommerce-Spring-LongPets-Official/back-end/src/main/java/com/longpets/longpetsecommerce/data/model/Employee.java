@@ -1,6 +1,6 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,151 +10,151 @@ import java.util.Set;
 @Entity
 @Table(name = "employee")
 public class Employee {
-        
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "employee_id")
-        private Long employeeId;
 
-        public Long getEmployeeId() {
-                return employeeId;
-        }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "employee_id")
+    private Long employeeId;
 
-        public void setEmployeeId(Long employeeId) {
-                this.employeeId = employeeId;
-        }
+    public Long getEmployeeId() {
+        return employeeId;
+    }
 
-        @Column(name = "employee_email")
-        private String employeeEmail;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
 
-        public String getEmployeeEmail() {
-                return employeeEmail;
-        }
+    @Column(name = "employee_email")
+    private String employeeEmail;
 
-        public void setEmployeeEmail(String employeeEmail) {
-                this.employeeEmail = employeeEmail;
-        }
+    public String getEmployeeEmail() {
+        return employeeEmail;
+    }
 
-        @Column(name = "employee_password")
-        private String employeePassword;
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
+    }
 
-        public String getEmployeePassword() {
-                return employeePassword;
-        }
+    @Column(name = "employee_password")
+    private String employeePassword;
 
-        public void setEmployeePassword(String employeePassword) {
-                this.employeePassword = employeePassword;
-        }
+    public String getEmployeePassword() {
+        return employeePassword;
+    }
 
-        @Column(name = "employee_name")
-        private String employeeName;
+    public void setEmployeePassword(String employeePassword) {
+        this.employeePassword = employeePassword;
+    }
 
-        public String getEmployeeName() {
-                return employeeName;
-        }
+    @Column(name = "employee_name")
+    private String employeeName;
 
-        public void setEmployeeName(String employeeName) {
-                this.employeeName = employeeName;
-        }
+    public String getEmployeeName() {
+        return employeeName;
+    }
 
-        @Column(name = "employee_birthday")
-        private Date employeeBirthday;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 
-        public Date getEmployeeBirthday() {
-                return employeeBirthday;
-        }
+    @Column(name = "employee_birthday")
+    private Date employeeBirthday;
 
-        public void setEmployeeBirthday(Date employeeBirthday) {
-                this.employeeBirthday = employeeBirthday;
-        }
+    public Date getEmployeeBirthday() {
+        return employeeBirthday;
+    }
 
-        @Column(name = "employee_gender")
-        private String employeeGender;
+    public void setEmployeeBirthday(Date employeeBirthday) {
+        this.employeeBirthday = employeeBirthday;
+    }
 
-        public String getEmployeeGender() {
-                return employeeGender;
-        }
+    @Column(name = "employee_gender")
+    private String employeeGender;
 
-        public void setEmployeeGender(String employeeGender) {
-                this.employeeGender = employeeGender;
-        }
+    public String getEmployeeGender() {
+        return employeeGender;
+    }
 
-        @Column(name = "employee_phone")
-        private String employeePhone;
+    public void setEmployeeGender(String employeeGender) {
+        this.employeeGender = employeeGender;
+    }
 
-        public String getEmployeePhone() {
-                return employeePhone;
-        }
+    @Column(name = "employee_phone")
+    private String employeePhone;
 
-        public void setEmployeePhone(String employeePhone) {
-                this.employeePhone = employeePhone;
-        }
+    public String getEmployeePhone() {
+        return employeePhone;
+    }
 
-        @Column(name = "employee_address")
-        private String employeeAddress;
+    public void setEmployeePhone(String employeePhone) {
+        this.employeePhone = employeePhone;
+    }
 
-        public String getEmployeeAddress() {
-                return employeeAddress;
-        }
+    @Column(name = "employee_address")
+    private String employeeAddress;
 
-        public void setEmployeeAddress(String employeeAddress) {
-                this.employeeAddress = employeeAddress;
-        }
+    public String getEmployeeAddress() {
+        return employeeAddress;
+    }
 
-        @Column(name = "employee_avatar")
-        private String employeeAvatar;
+    public void setEmployeeAddress(String employeeAddress) {
+        this.employeeAddress = employeeAddress;
+    }
 
-        public String getEmployeeAvatar() {
-                return employeeAvatar;
-        }
+    @Column(name = "employee_avatar")
+    private String employeeAvatar;
 
-        public void setEmployeeAvatar(String employeeAvatar) {
-                this.employeeAvatar = employeeAvatar;
-        }
+    public String getEmployeeAvatar() {
+        return employeeAvatar;
+    }
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "position_id", referencedColumnName = "position_id", foreignKey = @ForeignKey(name = "employee_position_fk1"))
-        private Position positionEmployee;
+    public void setEmployeeAvatar(String employeeAvatar) {
+        this.employeeAvatar = employeeAvatar;
+    }
 
-        public Position getPositionEmployee() {
-                return positionEmployee;
-        }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id", referencedColumnName = "position_id", foreignKey = @ForeignKey(name = "employee_position_fk1"))
+    private Position positionEmployee;
 
-        public void setPositionEmployee(Position positionEmployee) {
-                this.positionEmployee = positionEmployee;
-        }
+    public Position getPositionEmployee() {
+        return positionEmployee;
+    }
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "ward_id", referencedColumnName = "ward_id", foreignKey = @ForeignKey(name = "employee_ward_fk2"))
-        private Ward wardEmployee;
+    public void setPositionEmployee(Position positionEmployee) {
+        this.positionEmployee = positionEmployee;
+    }
 
-        public Ward getWardEmployee() {
-                return wardEmployee;
-        }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ward_id", referencedColumnName = "ward_id", foreignKey = @ForeignKey(name = "employee_ward_fk2"))
+    private Ward wardEmployee;
 
-        public void setWardEmployee(Ward wardEmployee) {
-                this.wardEmployee = wardEmployee;
-        }
+    public Ward getWardEmployee() {
+        return wardEmployee;
+    }
 
-        @OneToMany(mappedBy = "employeeOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        private Set<Order> orders = new HashSet<>();
+    public void setWardEmployee(Ward wardEmployee) {
+        this.wardEmployee = wardEmployee;
+    }
 
-        public Employee(Long employeeId, String employeeEmail, String employeePassword, String employeeName,
-                        Date employeeBirthday, String employeeGender, String employeePhone, String employeeAddress,
-                        String employeeAvatar, Position positionEmployee, Ward wardEmployee) {
-                this.employeeId = employeeId;
-                this.employeeEmail = employeeEmail;
-                this.employeePassword = employeePassword;
-                this.employeeName = employeeName;
-                this.employeeBirthday = employeeBirthday;
-                this.employeeGender = employeeGender;
-                this.employeePhone = employeePhone;
-                this.employeeAddress = employeeAddress;
-                this.employeeAvatar = employeeAvatar;
-                this.positionEmployee = positionEmployee;
-                this.wardEmployee = wardEmployee;
-        }
+    @OneToMany(mappedBy = "employeeOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Order> orders = new HashSet<>();
 
-        public Employee() {
-        }
+    public Employee() {
+    }
+
+    public Employee(String employeeEmail, String employeePassword, String employeeName, Date employeeBirthday,
+                    String employeeGender, String employeePhone, String employeeAddress, String employeeAvatar,
+                    Position positionEmployee, Ward wardEmployee) {
+        this.employeeEmail = employeeEmail;
+        this.employeePassword = employeePassword;
+        this.employeeName = employeeName;
+        this.employeeBirthday = employeeBirthday;
+        this.employeeGender = employeeGender;
+        this.employeePhone = employeePhone;
+        this.employeeAddress = employeeAddress;
+        this.employeeAvatar = employeeAvatar;
+        this.positionEmployee = positionEmployee;
+        this.wardEmployee = wardEmployee;
+    }
 }

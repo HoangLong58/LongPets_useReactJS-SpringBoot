@@ -1,7 +1,5 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -35,20 +33,19 @@ public class AdminLog {
     @Column(name = "log_avatar")
     private String logAvatar;
 
-    public AdminLog() {
-    }
-
-    public AdminLog(Long logId, String logContent, String logAvatar) {
-        this.logId = logId;
-        this.logContent = logContent;
-        this.logAvatar = logAvatar;
-    }
-
     public String getLogAvatar() {
         return logAvatar;
     }
 
     public void setLogAvatar(String logAvatar) {
+        this.logAvatar = logAvatar;
+    }
+
+    public AdminLog() {
+    }
+
+    public AdminLog(String logContent, String logAvatar) {
+        this.logContent = logContent;
         this.logAvatar = logAvatar;
     }
 }

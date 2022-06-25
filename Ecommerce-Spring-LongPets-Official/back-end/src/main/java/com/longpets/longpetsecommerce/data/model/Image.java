@@ -1,7 +1,5 @@
 package com.longpets.longpetsecommerce.data.model;
 
-import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -38,20 +36,19 @@ public class Image {
             foreignKey = @ForeignKey(name = "image_pet_fk1"))
     private Pet petImage;
 
-    public Image(Long imageId, String imageContent, Pet petImage) {
-        this.imageId = imageId;
-        this.imageContent = imageContent;
+    public Pet getPetImage() {
+        return petImage;
+    }
+
+    public void setPetImage(Pet petImage) {
         this.petImage = petImage;
     }
 
     public Image() {
     }
 
-    public Pet getPetImage() {
-        return petImage;
-    }
-
-    public void setPetImage(Pet petImage) {
+    public Image(String imageContent, Pet petImage) {
+        this.imageContent = imageContent;
         this.petImage = petImage;
     }
 }
