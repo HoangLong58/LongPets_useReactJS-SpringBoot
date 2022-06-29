@@ -1,12 +1,20 @@
 package com.longpets.longpetsecommerce.data.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "order_status")
 public class OrderStatus {
 
@@ -15,33 +23,10 @@ public class OrderStatus {
     @Column(name = "order_status_id")
     private Long orderStatusId;
 
-    public Long getOrderStatusId() {
-        return orderStatusId;
-    }
-
-    public void setOrderStatusId(Long orderStatusId) {
-        this.orderStatusId = orderStatusId;
-    }
-
     @Column(name = "order_status_name")
     private String orderStatusName;
-
-    public String getOrderStatusName() {
-        return orderStatusName;
-    }
-
-    public void setOrderStatusName(String orderStatusName) {
-        this.orderStatusName = orderStatusName;
-    }
 
     @OneToMany(mappedBy = "orderStatusOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
-
-    public OrderStatus() {
-    }
-
-    public OrderStatus(String orderStatusName) {
-        this.orderStatusName = orderStatusName;
-    }
 }
