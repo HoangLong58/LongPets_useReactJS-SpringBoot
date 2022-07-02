@@ -52,9 +52,15 @@ public class Customer {
             foreignKey = @ForeignKey(name = "customer_ward_fk1"))
     private Ward wardCustomer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", foreignKey = @ForeignKey(name = "customer_role_fk2"))
-    private Role roleCustomer;
+    @ManyToMany
+    @JoinTable(
+            name = "customer_role",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles = new ArrayList<>();
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "role_id", referencedColumnName = "role_id", foreignKey = @ForeignKey(name = "customer_role_fk2"))
+//    private Role roleCustomer;
 
     @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

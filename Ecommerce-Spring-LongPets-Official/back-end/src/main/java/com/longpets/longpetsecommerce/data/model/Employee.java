@@ -50,9 +50,15 @@ public class Employee {
     @JoinColumn(name = "ward_id", referencedColumnName = "ward_id", foreignKey = @ForeignKey(name = "employee_ward_fk2"))
     private Ward wardEmployee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", foreignKey = @ForeignKey(name = "employee_role_fk3"))
-    private Role roleEmployee;
+    @ManyToMany
+    @JoinTable(
+            name = "employee_role",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles = new ArrayList<>();
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "role_id", referencedColumnName = "role_id", foreignKey = @ForeignKey(name = "employee_role_fk3"))
+//    private Role roleEmployee;
 
     @OneToMany(mappedBy = "employeeOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

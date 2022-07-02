@@ -26,12 +26,12 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-    @OneToMany(mappedBy = "roleEmployee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Employee> employees = new HashSet<>();
-
-    @OneToMany(mappedBy = "roleCustomer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Customer> customers = new HashSet<>();
+//    @OneToMany(mappedBy = "roleEmployee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<Employee> employees = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "roleCustomer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<Customer> customers = new HashSet<>();
 }
 

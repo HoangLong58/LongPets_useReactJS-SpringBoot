@@ -4,5 +4,5 @@ import com.longpets.longpetsecommerce.data.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    Customer findByEmailCustomer(String emailCustomer);
+    Customer findByCustomerEmail(String customerEmail);
 }
