@@ -41,10 +41,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
     private final CustomerRepository customerRepository;
     private final RoleRepository roleRepository;
-
-    private final WardRepository wardRepository;
     private final PasswordEncoder passwordEncoder;
-
 
     @Override
     public UserDetails loadUserByUsername(String customerEmail) throws UsernameNotFoundException {
@@ -135,4 +132,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         customer.getRoles().add(role);
         return customerRepository.save(customer);
     }
+
+
 }

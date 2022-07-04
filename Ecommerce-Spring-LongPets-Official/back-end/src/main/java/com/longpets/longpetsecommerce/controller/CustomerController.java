@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
+import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.Data;
@@ -56,8 +57,8 @@ public class CustomerController {
     }
 
     @PostMapping("/role/add-to-user")
-    public ResponseEntity<?>addRoleToUser(@RequestBody RoleToUserForm roleToUserForm) {
-        customerService.addRoleToCustomer(roleToUserForm.getEmailCustomer(), roleToUserForm.getRoleName());
+    public ResponseEntity<?>addRoleToUser(@RequestBody AddRoleToCustomerRequestDto roleToUserForm) {
+        customerService.addRoleToCustomer(roleToUserForm.getCustomerEmail(), roleToUserForm.getRoleName());
         return ResponseEntity.ok().build();
     }
 
@@ -73,8 +74,8 @@ public class CustomerController {
     }
 }
 
-@Data
-class RoleToUserForm {
-    private String emailCustomer;
-    private String roleName;
-}
+//@Data
+//class RoleToUserForm {
+//    private String emailCustomer;
+//    private String roleName;
+//}

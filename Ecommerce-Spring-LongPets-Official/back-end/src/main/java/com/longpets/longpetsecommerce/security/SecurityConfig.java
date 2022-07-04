@@ -15,6 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 import static java.lang.invoke.VarHandle.AccessMode.GET;
 
@@ -39,10 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/login-customer");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login-customer/**", "/customer/register", "/customer/token/refresh/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/customer/user/**").hasAuthority("ROLE_CUSTOMER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/customer/user/save/**").hasAuthority("ROLE_ADMIN");
-        http.authorizeRequests().anyRequest().authenticated();
+//        http.authorizeRequests().antMatchers("/login-customer/**", "/customer/register", "/customer/token/refresh/**").permitAll();
+//        http.authorizeRequests().antMatchers(HttpMethod.GET, "/customer/user/**").hasAuthority("ROLE_CUSTOMER");
+//        http.authorizeRequests().antMatchers(HttpMethod.POST, "/customer/user/save/**").hasAuthority("ROLE_ADMIN");
+//        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
