@@ -1,8 +1,17 @@
 package com.longpets.longpetsecommerce.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.longpets.longpetsecommerce.data.model.Category;
+import com.longpets.longpetsecommerce.data.model.Image;
+import com.longpets.longpetsecommerce.data.model.OrderDetail;
 import org.springframework.beans.factory.annotation.Value;
 
-public interface AllPetOfCategoryResponseDto {
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+public interface AllPetSearchByNameResponseDto {
+
     @Value("#{target.pet_id}")
     Long getPetId();
 
@@ -44,16 +53,4 @@ public interface AllPetOfCategoryResponseDto {
 
     @Value("#{target.category_name}")
     String getCategoryName();
-
-    @Value("#{target.category_title}")
-    String getCategoryTitle();
-
-    @Value("#{target.category_image}")
-    String getCategoryImage();
-
-    @Value("#{target.image_id}")
-    Long getImageId();
-
-    @Value("#{target.image_content}")
-    String getImageContent();
 }

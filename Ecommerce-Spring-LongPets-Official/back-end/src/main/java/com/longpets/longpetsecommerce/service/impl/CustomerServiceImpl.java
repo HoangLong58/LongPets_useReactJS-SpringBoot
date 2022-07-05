@@ -11,6 +11,8 @@ import com.longpets.longpetsecommerce.data.model.Ward;
 import com.longpets.longpetsecommerce.data.repository.CustomerRepository;
 import com.longpets.longpetsecommerce.data.repository.RoleRepository;
 import com.longpets.longpetsecommerce.data.repository.WardRepository;
+import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
+import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -133,5 +135,16 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         return customerRepository.save(customer);
     }
 
+    @Override
+    public MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone) {
+        MessageResponseDto messageResponseDto = new MessageResponseDto();
 
+        List<CustomerResponseDto> customerResponseDtos = customerRepository.checkCustomerPhone(customerId, customerPhone);
+        if(customerResponseDtos.isEmpty()) {
+            messageResponseDto.setMessage("Unregistered phone number");
+        } else {
+            messageResponseDto.setMessage("Registered phone number");
+        }
+        return messageResponseDto;
+    }
 }

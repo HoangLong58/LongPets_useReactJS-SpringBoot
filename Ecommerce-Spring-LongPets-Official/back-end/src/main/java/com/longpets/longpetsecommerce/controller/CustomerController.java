@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.Data;
@@ -35,6 +36,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/customer")
 public class CustomerController {
     private final CustomerService customerService;
@@ -72,6 +74,11 @@ public class CustomerController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         customerService.refreshToken(request, response);
     }
+
+    @GetMapping("/check-customer-phone/{customerId}-{customerPhone}")
+    public MessageResponseDto checkCustomerPhone(@PathVariable(value = "customerId") Long customerId, @PathVariable(value = "customerPhone") String customerPhone) {
+        return customerService.checkCustomerPhone(customerId, customerPhone);
+    };
 }
 
 //@Data

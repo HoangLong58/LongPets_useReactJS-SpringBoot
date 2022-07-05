@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface OrderService {
     List<AllOrderDetailOfOrderResponseDto> getAllOrderDetailOfOrder(Long orderId);
+
     List<AllPetOfOrderDetailResponseDto> getAllPetOfOrderDetail(Long orderId);
+
+    void updateUserCancelOrder(Long orderId);
 }

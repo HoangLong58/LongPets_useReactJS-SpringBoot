@@ -24,4 +24,9 @@ public class OrderController {
     List<AllPetOfOrderDetailResponseDto> getAllPetOfOrderDetail(@PathVariable Long orderId) {
         return orderService.getAllPetOfOrderDetail(orderId);
     };
+
+    @PutMapping("/user-cancel-order/{orderId}")
+    void updateUserCancelOrder(@PathVariable(value = "orderId") Long orderId) {
+        orderService.updateUserCancelOrder(orderId);
+    }
 }

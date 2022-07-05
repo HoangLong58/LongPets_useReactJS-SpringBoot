@@ -33,7 +33,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<AllPetOfCategoryResponseDto> getAllPetOfCategory(Long categoryId) {
-        return categoryRepository.getAllPetOfCategory(categoryId);
+    public List<AllPetOfCategoryResponseDto> getAllPetOfCategory() {
+        return categoryRepository.getAllPetOfCategory();
+    }
+
+    @Override
+    public List<AllPetOfCategoryResponseDto> getAllPetOfCategoryByCategoryId(Long categoryId) {
+        return categoryRepository.getAllPetOfCategoryByCategoryId(categoryId);
     }
 }

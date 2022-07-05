@@ -10,5 +10,7 @@ import java.util.List;
 public interface CategoryService {
     public List<CategoryResponseDto> getAllCategory();
 
-    List<AllPetOfCategoryResponseDto> getAllPetOfCategory(Long categoryId);
+    List<AllPetOfCategoryResponseDto> getAllPetOfCategoryByCategoryId(Long categoryId);
+
+    List<AllPetOfCategoryResponseDto> getAllPetOfCategory();
 }
