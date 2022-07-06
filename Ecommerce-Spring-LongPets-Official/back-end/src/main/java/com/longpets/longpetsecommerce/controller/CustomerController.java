@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
@@ -79,6 +81,18 @@ public class CustomerController {
     public MessageResponseDto checkCustomerPhone(@PathVariable(value = "customerId") Long customerId, @PathVariable(value = "customerPhone") String customerPhone) {
         return customerService.checkCustomerPhone(customerId, customerPhone);
     };
+
+    @PutMapping("/update-customer")
+    public void updateCustomer(@RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
+        customerService.updateCustomer(updateCustomerRequestDto);
+    }
+
+    @GetMapping("/find-customer/{customerId}")
+    public CustomerResponseDto findCustomerByCustomerId(@PathVariable(value = "customerId") Long customerId) {
+       return customerService.findCustomerByCustomerId(customerId);
+    }
+
+
 }
 
 //@Data

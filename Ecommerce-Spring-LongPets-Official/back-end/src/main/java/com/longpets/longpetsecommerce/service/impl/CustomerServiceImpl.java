@@ -11,6 +11,7 @@ import com.longpets.longpetsecommerce.data.model.Ward;
 import com.longpets.longpetsecommerce.data.repository.CustomerRepository;
 import com.longpets.longpetsecommerce.data.repository.RoleRepository;
 import com.longpets.longpetsecommerce.data.repository.WardRepository;
+import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
@@ -146,5 +147,27 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
             messageResponseDto.setMessage("Registered phone number");
         }
         return messageResponseDto;
+    }
+
+    @Override
+    public void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto) {
+        try {
+            customerRepository.updateCustomer(updateCustomerRequestDto.getWardId(),
+                    updateCustomerRequestDto.getCustomerName(),
+                    updateCustomerRequestDto.getCustomerBirthday(),
+                    updateCustomerRequestDto.getCustomerGender(),
+                    updateCustomerRequestDto.getCustomerPhone(),
+                    updateCustomerRequestDto.getCustomerAddress(),
+                    updateCustomerRequestDto.getCustomerAvatar(),
+                    updateCustomerRequestDto.getCustomerId());
+        }
+        catch (Exception e) {
+            throw new ApiRequestException("Error when update customer");
+        }
+    }
+
+    @Override
+    public CustomerResponseDto findCustomerByCustomerId(Long customerId) {
+        return customerRepository.findCustomerByCustomerId(customerId);
     }
 }

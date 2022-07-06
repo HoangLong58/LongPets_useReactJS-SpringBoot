@@ -1,10 +1,12 @@
 package com.longpets.longpetsecommerce.controller;
 
+import com.longpets.longpetsecommerce.dto.request.AddOrderRequestDto;
 import com.longpets.longpetsecommerce.dto.response.AllOrderDetailOfOrderResponseDto;
 import com.longpets.longpetsecommerce.dto.response.AllPetOfCategoryResponseDto;
 import com.longpets.longpetsecommerce.dto.response.AllPetOfOrderDetailResponseDto;
 import com.longpets.longpetsecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +30,10 @@ public class OrderController {
     @PutMapping("/user-cancel-order/{orderId}")
     void updateUserCancelOrder(@PathVariable(value = "orderId") Long orderId) {
         orderService.updateUserCancelOrder(orderId);
+    }
+
+    @PostMapping("/add-order")
+    void addOrder(@RequestBody AddOrderRequestDto addOrderRequestDto) {
+        orderService.addOrder(addOrderRequestDto);
     }
 }

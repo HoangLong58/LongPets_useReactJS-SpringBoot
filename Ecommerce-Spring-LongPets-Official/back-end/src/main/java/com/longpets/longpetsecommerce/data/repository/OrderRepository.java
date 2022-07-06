@@ -4,12 +4,14 @@ import com.longpets.longpetsecommerce.data.model.Order;
 import com.longpets.longpetsecommerce.dto.response.AllDetailOrderByOrderIdResponseDto;
 import com.longpets.longpetsecommerce.dto.response.AllOrderDetailOfOrderResponseDto;
 import com.longpets.longpetsecommerce.dto.response.AllPetOfOrderDetailResponseDto;
+import com.longpets.longpetsecommerce.dto.response.OrderByOrderDateResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -37,4 +39,28 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "update pet set pet_quantity = pet_quantity + ? where pet_id = ?;",
             nativeQuery = true)
     void updatePetQuantityInOrderDetail(Long order_detail_quantity, Long pet_id);
+
+//    ===== Feature: Order
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "insert into \"order\" (customer_id, ward_id, employee_id, order_name, order_email, order_phone, order_address, order_note, order_date, order_status_id, order_total) values (?, ?, 0, ?, ?, ?, ?, ?, ?, 1, ?);",
+            nativeQuery = true)
+    void addOrder(Long customerId, String wardId, String orderName, String orderEmail, String orderPhone, String orderAddress, String orderNote, Date orderDate,  Long orderTotal);
+
+    @Query(value = "select order_id, order_name, order_email, order_phone, order_address, order_note, order_date, order_total, customer_id, ward_id, employee_id, order_status_id from \"order\" where order_date = ? AND customer_id = ? AND order_phone = ?;",
+            nativeQuery = true)
+    List<OrderByOrderDateResponseDto> getOrderByOrderDate(Date orderDate, Long customerId, String orderPhone);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "insert into order_detail (pet_id, order_id, order_detail_price, order_detail_quantity, order_detail_total) values ( ?, ?, ?, ?, ?)",
+            nativeQuery = true)
+    void addOrderDetail(Long petId, Long orderId, Long orderDetailPrice, Long orderDetailQuantity, Long orderDetailTotal);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update pet set pet_quantity = pet_quantity - ? where pet_id = ?;",
+            nativeQuery = true)
+    void updatePetQuantityAfterOrder(Long petQuantityBuy ,Long petId);
 }
