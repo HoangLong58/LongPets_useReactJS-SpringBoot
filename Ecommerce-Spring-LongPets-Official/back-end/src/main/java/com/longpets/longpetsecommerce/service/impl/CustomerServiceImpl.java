@@ -11,12 +11,14 @@ import com.longpets.longpetsecommerce.data.model.Ward;
 import com.longpets.longpetsecommerce.data.repository.CustomerRepository;
 import com.longpets.longpetsecommerce.data.repository.RoleRepository;
 import com.longpets.longpetsecommerce.data.repository.WardRepository;
+import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +47,9 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     private final CustomerRepository customerRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final ModelMapper modelMapper;
+
 
     @Override
     public UserDetails loadUserByUsername(String customerEmail) throws UsernameNotFoundException {
@@ -126,7 +131,9 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
 //    Register new customer
     @Override
-    public Customer registerCustomer(Customer customer) {
+    public Customer registerCustomer(RegisterRequestDto registerRequestDto) {
+        Customer customer = modelMapper.map(registerRequestDto, Customer.class);
+        System.out.printf("Customer:" + customer.toString());
         if (customerRepository.findByCustomerEmail(customer.getCustomerEmail()) != null) {
             throw new ApiRequestException("Email is already in use");
         }
@@ -169,5 +176,10 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     @Override
     public CustomerResponseDto findCustomerByCustomerId(Long customerId) {
         return customerRepository.findCustomerByCustomerId(customerId);
+    }
+
+    @Override
+    public CustomerResponseDto findCustomerByCustomerEmail(String customerEmail) {
+        return customerRepository.findCustomerByCustomerEmail(customerEmail);
     }
 }

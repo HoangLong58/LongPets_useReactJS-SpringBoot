@@ -1,16 +1,15 @@
 package com.longpets.longpetsecommerce.data.repository;
 
 import com.longpets.longpetsecommerce.data.model.Order;
-import com.longpets.longpetsecommerce.dto.response.AllDetailOrderByOrderIdResponseDto;
-import com.longpets.longpetsecommerce.dto.response.AllOrderDetailOfOrderResponseDto;
-import com.longpets.longpetsecommerce.dto.response.AllPetOfOrderDetailResponseDto;
-import com.longpets.longpetsecommerce.dto.response.OrderByOrderDateResponseDto;
+import com.longpets.longpetsecommerce.dto.response.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "insert into \"order\" (customer_id, ward_id, employee_id, order_name, order_email, order_phone, order_address, order_note, order_date, order_status_id, order_total) values (?, ?, 0, ?, ?, ?, ?, ?, ?, 1, ?);",
             nativeQuery = true)
-    void addOrder(Long customerId, String wardId, String orderName, String orderEmail, String orderPhone, String orderAddress, String orderNote, Date orderDate,  Long orderTotal);
+    void addOrder(Long customerId, String wardId, String orderName, String orderEmail, String orderPhone, String orderAddress, String orderNote, Date orderDate, Long orderTotal);
 
     @Query(value = "select order_id, order_name, order_email, order_phone, order_address, order_note, order_date, order_total, customer_id, ward_id, employee_id, order_status_id from \"order\" where order_date = ? AND customer_id = ? AND order_phone = ?;",
             nativeQuery = true)
@@ -63,4 +62,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "update pet set pet_quantity = pet_quantity - ? where pet_id = ?;",
             nativeQuery = true)
     void updatePetQuantityAfterOrder(Long petQuantityBuy ,Long petId);
+//  =====
+
+    @Query(value = "select o.order_id, o.customer_id, o.order_name, o.order_email, o.order_phone, o.order_address, o.order_note, o.order_date, o.order_total, o.order_status_id, os.order_status_name, w.ward_id, w.ward_name, w.ward_type, d.district_id, d.district_name, d.district_type, c.city_id, c.city_name, c.city_type from \"order\" o join ward w on o.ward_id = w.ward_id join district d on w.district_id = d.district_id join city c on d.city_id = c.city_id join order_status os on o.order_status_id = os.order_status_id where o.customer_id = ? order by o.order_date desc;",
+            nativeQuery = true)
+    List<OrderByCustomerIdResponseDto> getOrderByCustomerId(Long customerId);
 }

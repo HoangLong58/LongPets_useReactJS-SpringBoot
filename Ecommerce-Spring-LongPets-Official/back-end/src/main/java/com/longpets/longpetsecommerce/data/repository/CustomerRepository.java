@@ -31,4 +31,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select customer_id, customer_email, customer_password, customer_name, customer_birthday, customer_gender, customer_phone, customer_address, customer_avatar, ward_id from customer where customer_id = ?;",
             nativeQuery = true)
     CustomerResponseDto findCustomerByCustomerId(Long customerId);
+
+    @Query(value = "select customer_id, customer_email, customer_password, customer_name, customer_birthday, customer_gender, customer_phone, customer_address, customer_avatar, ward_id from customer where customer_email = ?;",
+            nativeQuery = true)
+    CustomerResponseDto findCustomerByCustomerEmail(String customerEmail);
 }

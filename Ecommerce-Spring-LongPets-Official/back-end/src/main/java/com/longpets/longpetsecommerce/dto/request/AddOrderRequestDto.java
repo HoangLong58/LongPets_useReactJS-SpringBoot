@@ -13,8 +13,6 @@ public class AddOrderRequestDto {
 
     private String wardId;
 
-    private Long employeeId;
-
     private String orderName;
 
     private String orderEmail;
@@ -24,8 +22,6 @@ public class AddOrderRequestDto {
     private String orderAddress;
 
     private String orderNote;
-
-    private Long orderStatusId;
 
     private Long orderTotal;
 

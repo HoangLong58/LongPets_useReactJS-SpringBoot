@@ -4,6 +4,7 @@ import com.longpets.longpetsecommerce.dto.request.AddOrderRequestDto;
 import com.longpets.longpetsecommerce.dto.response.AllOrderDetailOfOrderResponseDto;
 import com.longpets.longpetsecommerce.dto.response.AllPetOfCategoryResponseDto;
 import com.longpets.longpetsecommerce.dto.response.AllPetOfOrderDetailResponseDto;
+import com.longpets.longpetsecommerce.dto.response.OrderByCustomerIdResponseDto;
 import com.longpets.longpetsecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,10 @@ public class OrderController {
     @PostMapping("/add-order")
     void addOrder(@RequestBody AddOrderRequestDto addOrderRequestDto) {
         orderService.addOrder(addOrderRequestDto);
+    }
+
+    @GetMapping("/get-order-by-customer-id/{customerId}")
+    List<OrderByCustomerIdResponseDto> getOrderByCustomerId(@PathVariable(value = "customerId") Long customerId) {
+        return orderService.getOrderByCustomerId(customerId);
     }
 }

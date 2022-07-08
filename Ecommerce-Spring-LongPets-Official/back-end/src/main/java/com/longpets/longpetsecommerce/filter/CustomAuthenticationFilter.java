@@ -5,6 +5,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
+import com.longpets.longpetsecommerce.data.repository.CustomerRepository;
+import com.longpets.longpetsecommerce.dto.response.CustomerReduxResponseDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,8 +39,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
         String customerEmail = request.getParameter("customerEmail");
         String customerPassword = request.getParameter("customerPassword");
+        System.out.println("customerEmail: "+customerEmail+" customerPassword: "+customerPassword);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(customerEmail, customerPassword);
         return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
@@ -44,7 +50,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-
         User user = (User) authentication.getPrincipal();
         //TODO: create this to file config
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -65,8 +70,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 //        response.setHeader("access_token", access_token);
 //        response.setHeader("refresh_token", refresh_token);
         Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", access_token);
-        tokens.put("refresh_token", refresh_token);
+        tokens.put("accessToken", access_token);
+        tokens.put("refreshToken", refresh_token);
+        tokens.put("customerEmail", user.getUsername());
+
+
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

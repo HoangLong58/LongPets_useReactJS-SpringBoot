@@ -3,16 +3,19 @@ package com.longpets.longpetsecommerce.service.impl;
 import com.longpets.longpetsecommerce.data.repository.OrderRepository;
 import com.longpets.longpetsecommerce.dto.request.AddOrderCartRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AddOrderRequestDto;
-import com.longpets.longpetsecommerce.dto.response.AllDetailOrderByOrderIdResponseDto;
-import com.longpets.longpetsecommerce.dto.response.AllOrderDetailOfOrderResponseDto;
-import com.longpets.longpetsecommerce.dto.response.AllPetOfOrderDetailResponseDto;
-import com.longpets.longpetsecommerce.dto.response.OrderByOrderDateResponseDto;
+import com.longpets.longpetsecommerce.dto.request.PetAndCategoryRequestDto;
+import com.longpets.longpetsecommerce.dto.response.*;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -52,42 +55,50 @@ public class OrderServiceImpl implements OrderService {
     public void addOrder(AddOrderRequestDto addOrderRequestDto) {
 //        Date order
         Date orderDate = new Date();
+
         try {
-            orderRepository.addOrder(addOrderRequestDto.getCustomerId(),
-                    addOrderRequestDto.getWardId(),
+                orderRepository.addOrder(addOrderRequestDto.getCustomerId(),
+                        addOrderRequestDto.getWardId(),
 //                    addOrderRequestDto.getEmployeeId(),
-                    addOrderRequestDto.getOrderName(),
-                    addOrderRequestDto.getOrderEmail(),
-                    addOrderRequestDto.getOrderPhone(),
-                    addOrderRequestDto.getOrderAddress(),
-                    addOrderRequestDto.getOrderNote(),
-                    orderDate,
+                        addOrderRequestDto.getOrderName(),
+                        addOrderRequestDto.getOrderEmail(),
+                        addOrderRequestDto.getOrderPhone(),
+                        addOrderRequestDto.getOrderAddress(),
+                        addOrderRequestDto.getOrderNote(),
+                        orderDate,
 //                    addOrderRequestDto.getOrderStatusId(),
-                    addOrderRequestDto.getOrderTotal());
-        } catch (Exception exception) {
-            throw new ApiRequestException("Error when add order");
-        }
-        List<OrderByOrderDateResponseDto> orders = orderRepository.getOrderByOrderDate(orderDate, addOrderRequestDto.getCustomerId(), addOrderRequestDto.getOrderPhone());
-        if (orders.isEmpty()) {
-            throw new ApiRequestException("Error: Can't find order");
-        }
-        OrderByOrderDateResponseDto order = orders.get(0);
-        List<AddOrderCartRequestDto> cartItems =  addOrderRequestDto.getCart();
-        cartItems.stream().forEach(cartItem -> {
-            try {
-                orderRepository.addOrderDetail(cartItem.getPetId(),
-                        order.getOrderId(),
-                        cartItem.getPetPriceDiscount(),
-                        cartItem.getPetQuantityBuy(),
-                        cartItem.getPetPriceDiscount() * cartItem.getPetQuantityBuy());
+                        addOrderRequestDto.getOrderTotal());
             } catch (Exception exception) {
-                throw new ApiRequestException("Error: Can't add new order detail");
+                throw new ApiRequestException("Error when add order");
             }
-            try {
-                orderRepository.updatePetQuantityAfterOrder(cartItem.getPetQuantityBuy(), cartItem.getPetId());
-            } catch (Exception exception) {
-                throw new ApiRequestException("Error: Can't update new quantity of pet");
+            List<OrderByOrderDateResponseDto> orders = orderRepository.getOrderByOrderDate(orderDate, addOrderRequestDto.getCustomerId(), addOrderRequestDto.getOrderPhone());
+            if (orders.isEmpty()) {
+                throw new ApiRequestException("Error: Can't find order");
             }
-        });
+            OrderByOrderDateResponseDto order = orders.get(0);
+            List<AddOrderCartRequestDto> cartList = addOrderRequestDto.getCart();
+        System.out.printf("Order: "+cartList.get(0).toString());
+            cartList.stream().forEach(cartItem -> {
+                try {
+                    orderRepository.addOrderDetail(cartItem.getData().get(0).getPetId(),
+                            order.getOrderId(),
+                            cartItem.getData().get(0).getPetPriceDiscount(),
+                            cartItem.getPetQuantityBuy(),
+                            cartItem.getData().get(0).getPetPriceDiscount() * cartItem.getPetQuantityBuy());
+                } catch (Exception exception) {
+//                throw new ApiRequestException("Error: Can't add new order detail");
+                    throw exception;
+                }
+                try {
+                    orderRepository.updatePetQuantityAfterOrder(cartItem.getPetQuantityBuy(), cartItem.getData().get(0).getPetId());
+                } catch (Exception exception) {
+                    throw new ApiRequestException("Error: Can't update new quantity of pet");
+                }
+            });
+    }
+
+    @Override
+    public List<OrderByCustomerIdResponseDto> getOrderByCustomerId(Long customerId) {
+        return orderRepository.getOrderByCustomerId(customerId);
     }
 }

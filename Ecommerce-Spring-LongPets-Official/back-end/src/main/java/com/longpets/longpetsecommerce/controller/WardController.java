@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/ward")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/ward")
 public class WardController {
 //    private WardService wardService;
 //

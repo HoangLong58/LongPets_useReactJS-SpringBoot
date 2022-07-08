@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
@@ -67,7 +68,7 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?>registerCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<?>registerCustomer(@RequestBody RegisterRequestDto customer) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/register").toUriString());
         return ResponseEntity.created(uri).body(customerService.registerCustomer(customer));
     }
@@ -90,6 +91,11 @@ public class CustomerController {
     @GetMapping("/find-customer/{customerId}")
     public CustomerResponseDto findCustomerByCustomerId(@PathVariable(value = "customerId") Long customerId) {
        return customerService.findCustomerByCustomerId(customerId);
+    }
+
+    @GetMapping("/find-customer-by-emailCustomer/{customerEmail}")
+    public CustomerResponseDto findCustomerByCustomerEmail(@PathVariable(value = "customerEmail") String customerEmail) {
+       return customerService.findCustomerByCustomerEmail(customerEmail);
     }
 
 

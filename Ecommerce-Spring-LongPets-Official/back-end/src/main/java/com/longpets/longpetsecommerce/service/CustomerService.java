@@ -2,6 +2,7 @@ package com.longpets.longpetsecommerce.service;
 
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
+import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
@@ -18,7 +19,7 @@ public interface CustomerService {
     Customer getCustomer(String emailCustomer);
     List<Customer> getCustomers();
 
-    Customer registerCustomer(Customer customer);
+    Customer registerCustomer(RegisterRequestDto customer);
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
     MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone);
@@ -26,4 +27,6 @@ public interface CustomerService {
     void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto);
 
     CustomerResponseDto findCustomerByCustomerId(Long customerId);
+
+    CustomerResponseDto findCustomerByCustomerEmail(String customerEmail);
 }

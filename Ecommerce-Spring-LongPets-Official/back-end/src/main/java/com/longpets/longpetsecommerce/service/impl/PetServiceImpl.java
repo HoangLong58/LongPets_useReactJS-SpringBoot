@@ -2,6 +2,8 @@ package com.longpets.longpetsecommerce.service.impl;
 
 import com.longpets.longpetsecommerce.data.repository.PetRepository;
 import com.longpets.longpetsecommerce.dto.response.AllPetSearchByNameResponseDto;
+import com.longpets.longpetsecommerce.dto.response.PetAndCategoryByPetIdResponseDto;
+import com.longpets.longpetsecommerce.dto.response.PetNameAndCategoryTitleByCategoryIdResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.PetService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +29,15 @@ public class PetServiceImpl implements PetService {
         throw e;
         }
         return allPetSearchByNameResponseDtos;
+    }
+
+    @Override
+    public List<PetAndCategoryByPetIdResponseDto> getPetAndCategoryByPetId(Long petId) {
+        return petRepository.getPetAndCategoryByPetId(petId);
+    }
+
+    @Override
+    public List<PetNameAndCategoryTitleByCategoryIdResponseDto> getPetNameAndCategoryTitleByCategoryId(Long categoryId) {
+        return petRepository.getPetNameAndCategoryTitleByCategoryId(categoryId);
     }
 }
