@@ -3,13 +3,7 @@ package com.longpets.longpetsecommerce.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.longpets.longpetsecommerce.data.model.Customer;
-import com.longpets.longpetsecommerce.data.model.Role;
-import com.longpets.longpetsecommerce.data.repository.CustomerRepository;
-import com.longpets.longpetsecommerce.dto.response.CustomerReduxResponseDto;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,7 +11,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,23 +24,23 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class AdminCustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
     private final AuthenticationManager authenticationManager;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public AdminCustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        String customerEmail = request.getParameter("customerEmail");
-        String customerPassword = request.getParameter("customerPassword");
-        System.out.println("customerEmail: "+customerEmail+" customerPassword: "+customerPassword);
+        String employeeEmail = request.getParameter("employeeEmail");
+        String employeePassword = request.getParameter("employeePassword");
+        System.out.println("employeeEmail: "+employeeEmail+" employeePassword: "+employeePassword);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                = new UsernamePasswordAuthenticationToken(customerEmail, customerPassword);
+                = new UsernamePasswordAuthenticationToken(employeeEmail, employeePassword);
         return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
     }
 
@@ -73,9 +66,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 //        response.setHeader("access_token", access_token);
 //        response.setHeader("refresh_token", refresh_token);
         Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", access_token);
-        tokens.put("refreshToken", refresh_token);
-        tokens.put("customerEmail", user.getUsername());
+        tokens.put("accessTokenAdmin", access_token);
+        tokens.put("refreshTokenAdmin", refresh_token);
+        tokens.put("employeeEmail", user.getUsername());
 
 
         response.setContentType(APPLICATION_JSON_VALUE);

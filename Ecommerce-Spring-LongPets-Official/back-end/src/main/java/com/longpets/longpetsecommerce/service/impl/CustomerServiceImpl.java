@@ -19,12 +19,15 @@ import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
@@ -42,6 +45,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Qualifier("CustomerServiceImpl")
 public class CustomerServiceImpl implements CustomerService, UserDetailsService {
 
     private final CustomerRepository customerRepository;
@@ -96,14 +100,14 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
-                String refresh_token = authorizationHeader.substring("Bearer ".length());
+                String refreshToken = authorizationHeader.substring("Bearer ".length());
                 //TODO: put it to config file
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = verifier.verify(refresh_token);
+                DecodedJWT decodedJWT = verifier.verify(refreshToken);
                 String customerEmail = decodedJWT.getSubject();
                 Customer customer = customerRepository.findByCustomerEmail(customerEmail);
-                String access_token = JWT.create()
+                String accessToken = JWT.create()
                         .withSubject(customer.getCustomerEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
@@ -111,8 +115,8 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put("access_token", access_token);
-                tokens.put("refresh_token", refresh_token);
+                tokens.put("accessToken", accessToken);
+                tokens.put("refresh_token", refreshToken);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             }catch (Exception exception) {

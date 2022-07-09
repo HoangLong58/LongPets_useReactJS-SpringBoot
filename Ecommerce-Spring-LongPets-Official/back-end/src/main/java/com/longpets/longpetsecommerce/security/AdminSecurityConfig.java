@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,25 +20,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
-
-import static java.lang.invoke.VarHandle.AccessMode.GET;
 
 
 @Configuration
 @EnableWebSecurity
-@Order(2)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(1)
+public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public SecurityConfig(@Autowired @Qualifier("CustomerServiceImpl") UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AdminSecurityConfig(@Autowired @Qualifier("EmployeeServiceImpl") UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -51,9 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter
-                = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/login-customer");
+        AdminCustomAuthenticationFilter adminCustomAuthenticationFilter
+                = new AdminCustomAuthenticationFilter(authenticationManagerBean());
+        adminCustomAuthenticationFilter.setFilterProcessesUrl("/admin/login-admin");
         http.cors();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -62,13 +53,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers(HttpMethod.GET, "/customer/user/**").hasAuthority("ROLE_CUSTOMER");
 //        http.authorizeRequests().antMatchers(HttpMethod.POST, "/customer/user/save/**").hasAuthority("ROLE_ADMIN");
 //        http.authorizeRequests().anyRequest().authenticated();
-        http.requestMatcher(new AntPathRequestMatcher("/login-customer")).authorizeRequests().anyRequest().permitAll();
 //        http.authorizeRequests().anyRequest().permitAll();
-        http.addFilter(customAuthenticationFilter);
+
+        http.requestMatcher(new AntPathRequestMatcher("/admin/login-admin"))
+                .authorizeRequests()
+//                .anyRequest()
+                .antMatchers("/admin*")
+                .permitAll();
+        http.addFilter(adminCustomAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean(name = "authenticationManagerBeanCustomer")
+
+    @Bean(name = "authenticationManagerBeanAdmin")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
