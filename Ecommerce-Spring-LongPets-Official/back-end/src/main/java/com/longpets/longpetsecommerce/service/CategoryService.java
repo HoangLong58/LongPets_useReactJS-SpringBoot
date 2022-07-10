@@ -2,8 +2,8 @@ package com.longpets.longpetsecommerce.service;
 
 import com.longpets.longpetsecommerce.data.model.AdminLog;
 import com.longpets.longpetsecommerce.data.model.Category;
-import com.longpets.longpetsecommerce.dto.response.AllPetOfCategoryResponseDto;
-import com.longpets.longpetsecommerce.dto.response.CategoryResponseDto;
+import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
+import com.longpets.longpetsecommerce.dto.response.*;
 
 import java.util.List;
 
@@ -13,4 +13,18 @@ public interface CategoryService {
     List<AllPetOfCategoryResponseDto> getAllPetOfCategoryByCategoryId(Long categoryId);
 
     List<AllPetOfCategoryResponseDto> getAllPetOfCategory();
+
+    List<CategoryFindByCategoryNameResponseDto> getAllCategoryByCategoryName(String categoryName);
+
+    CategoryQuantityResponseDto getCategoryCategoryQuantity();
+
+    Category updateCategory(CategoryUpdateRequestDto categoryUpdateRequestDto);
+
+    List<CategoryFindByCategoryIdResponseDto> findCategoryByCategoryId(Long categoryId);
+
+    void addCategory(String categoryName, String categoryTitle, String categoryImage);
+
+    void deleteCategory(Long categoryId);
+
+
 }

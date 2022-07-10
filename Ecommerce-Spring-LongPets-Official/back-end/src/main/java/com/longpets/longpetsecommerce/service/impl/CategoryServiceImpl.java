@@ -2,8 +2,9 @@ package com.longpets.longpetsecommerce.service.impl;
 
 import com.longpets.longpetsecommerce.data.model.Category;
 import com.longpets.longpetsecommerce.data.repository.CategoryRepository;
-import com.longpets.longpetsecommerce.dto.response.AllPetOfCategoryResponseDto;
-import com.longpets.longpetsecommerce.dto.response.CategoryResponseDto;
+import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
+import com.longpets.longpetsecommerce.dto.response.*;
+import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -40,5 +41,45 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<AllPetOfCategoryResponseDto> getAllPetOfCategoryByCategoryId(Long categoryId) {
         return categoryRepository.getAllPetOfCategoryByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<CategoryFindByCategoryNameResponseDto> getAllCategoryByCategoryName(String categoryName) {
+        return categoryRepository.getAllCategoryByName(categoryName);
+    }
+
+    @Override
+    public CategoryQuantityResponseDto getCategoryCategoryQuantity() {
+        return categoryRepository.getCategoryQuantity();
+    }
+
+    @Override
+    public Category updateCategory(CategoryUpdateRequestDto categoryUpdateRequestDto) {
+        Category category = modelMapper.map(categoryUpdateRequestDto, Category.class);
+        try {
+            categoryRepository.updateCategory(category.getCategoryName(),
+                    category.getCategoryTitle(),
+                    category.getCategoryImage(),
+                    category.getCategoryId());
+            return category;
+        } catch(Exception exception) {
+            throw exception;
+//            throw new ApiRequestException("Error: Can't update category");
+        }
+    }
+
+    @Override
+    public List<CategoryFindByCategoryIdResponseDto> findCategoryByCategoryId(Long categoryId) {
+        return categoryRepository.findCategoryByCategotyId(categoryId);
+    }
+
+    @Override
+    public void addCategory(String categoryName, String categoryTitle, String categoryImage) {
+        categoryRepository.addCategory(categoryName, categoryTitle, categoryImage);
+    }
+
+    @Override
+    public void deleteCategory(Long categoryId) {
+        categoryRepository.deleteCategory(categoryId);
     }
 }

@@ -3,10 +3,12 @@ package com.longpets.longpetsecommerce.data.repository;
 import com.longpets.longpetsecommerce.data.model.Category;
 import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.model.Ward;
-import com.longpets.longpetsecommerce.dto.response.AllPetOfCategoryResponseDto;
+import com.longpets.longpetsecommerce.dto.response.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +32,35 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             " group by p.pet_id;",
             nativeQuery = true)
     List<AllPetOfCategoryResponseDto> getAllPetOfCategory();
+
+    @Query(value = "select category_id, category_name, category_title, category_image from category where category_name like concat('%', ?, '%')",
+            nativeQuery = true)
+    List<CategoryFindByCategoryNameResponseDto> getAllCategoryByName(String categoryName);
+
+    @Query(value = "select count(category_id) as category_quantity from category",
+            nativeQuery = true)
+    CategoryQuantityResponseDto getCategoryQuantity();
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update category set category_name = ?, category_title = ?, category_image = ? where category_id = ?",
+            nativeQuery = true)
+    void updateCategory(String categoryName, String categoryTitle, String categoryImage, Long categoryId);
+
+    @Query(value = "select category_id, category_name, category_title, category_image from category where category_id = ?",
+            nativeQuery = true)
+    List<CategoryFindByCategoryIdResponseDto> findCategoryByCategotyId(Long categoryId);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "insert into category (category_name, category_title, category_image) values (?, ?, ?);",
+            nativeQuery = true)
+    void addCategory(String categoryName, String categoryTitle, String categoryImage);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "delete from category where category_id = ?;",
+            nativeQuery = true)
+    void deleteCategory(Long categoryId);
+
 }
