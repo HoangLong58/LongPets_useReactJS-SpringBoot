@@ -13,8 +13,10 @@ import com.longpets.longpetsecommerce.data.repository.RoleRepository;
 import com.longpets.longpetsecommerce.data.repository.WardRepository;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.response.CustomerQuantityResponseDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
+import com.longpets.longpetsecommerce.dto.response.WardDistrictCityResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -185,5 +187,39 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     @Override
     public CustomerResponseDto findCustomerByCustomerEmail(String customerEmail) {
         return customerRepository.findCustomerByCustomerEmail(customerEmail);
+    }
+
+    @Override
+    public List<CustomerResponseDto> getCustomer() {
+        return customerRepository.getCustomer();
+    }
+
+    @Override
+    public List<CustomerResponseDto> getCustomerByCustomerName(String customerName) {
+        return customerRepository.getCustomerByCustomerName(customerName);
+    }
+
+    @Override
+    public CustomerQuantityResponseDto getCustomerQuantity() {
+        return customerRepository.getCustomerQuantity();
+    }
+
+    @Override
+    public void deleteCustomer(Long customerId) {
+        try {
+            customerRepository.deleteCustomerRole(customerId);
+            try {
+                customerRepository.deleteCustomer(customerId);
+            } catch (Exception exception) {
+                throw new ApiRequestException("Error when delete  user");
+            }
+        } catch (Exception exception) {
+            throw new ApiRequestException("Error when delete role user");
+        }
+    }
+
+    @Override
+    public WardDistrictCityResponseDto getWardDistrictCity(String wardId) {
+        return customerRepository.getWardDistrictCity(wardId);
     }
 }

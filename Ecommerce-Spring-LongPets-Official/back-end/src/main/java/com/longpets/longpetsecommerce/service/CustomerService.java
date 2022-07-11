@@ -4,8 +4,10 @@ import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.response.CustomerQuantityResponseDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
+import com.longpets.longpetsecommerce.dto.response.WardDistrictCityResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,4 +31,13 @@ public interface CustomerService {
     CustomerResponseDto findCustomerByCustomerId(Long customerId);
 
     CustomerResponseDto findCustomerByCustomerEmail(String customerEmail);
+
+    List<CustomerResponseDto> getCustomer();
+    List<CustomerResponseDto> getCustomerByCustomerName(String customerName);
+
+    CustomerQuantityResponseDto getCustomerQuantity();
+
+    void deleteCustomer(Long customerId);
+
+    WardDistrictCityResponseDto getWardDistrictCity(String wardId);
 }

@@ -10,8 +10,10 @@ import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
+import com.longpets.longpetsecommerce.dto.response.CustomerQuantityResponseDto;
 import com.longpets.longpetsecommerce.dto.response.CustomerResponseDto;
 import com.longpets.longpetsecommerce.dto.response.MessageResponseDto;
+import com.longpets.longpetsecommerce.dto.response.WardDistrictCityResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.CustomerService;
 import lombok.Data;
@@ -98,7 +100,30 @@ public class CustomerController {
        return customerService.findCustomerByCustomerEmail(customerEmail);
     }
 
+    @GetMapping("/get-customer")
+    public List<CustomerResponseDto> getCustomer() {
+        return customerService.getCustomer();
+    }
 
+    @GetMapping("/get-customer-by-customer-name/{customerName}")
+    public List<CustomerResponseDto> getCustomerByCustomerName(@PathVariable(value = "customerName") String customerName) {
+        return customerService.getCustomerByCustomerName(customerName);
+    }
+
+    @GetMapping("/get-customer-quantity")
+    public CustomerQuantityResponseDto getCustomerQuantity() {
+        return customerService.getCustomerQuantity();
+    }
+
+    @PutMapping("/delete-customer/{customerId}")
+    public void deleteCustomer(@PathVariable(value = "customerId") Long customerId) {
+        customerService.deleteCustomer(customerId);
+    }
+
+    @GetMapping("/get-ward-district-city/{wardId}")
+    public WardDistrictCityResponseDto getWardDistrictCity(@PathVariable(value = "wardId") String wardId) {
+        return customerService.getWardDistrictCity(wardId);
+    }
 }
 
 //@Data

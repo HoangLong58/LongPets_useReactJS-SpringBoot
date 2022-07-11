@@ -1,9 +1,7 @@
 package com.longpets.longpetsecommerce.service;
 
-import com.longpets.longpetsecommerce.dto.response.AllPetSearchByNameResponseDto;
-import com.longpets.longpetsecommerce.dto.response.PetAndCategoryByPetIdResponseDto;
-
-import com.longpets.longpetsecommerce.dto.response.PetNameAndCategoryTitleByCategoryIdResponseDto;
+import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
+import com.longpets.longpetsecommerce.dto.response.*;
 
 import java.util.List;
 
@@ -13,4 +11,10 @@ public interface PetService {
     List<PetAndCategoryByPetIdResponseDto> getPetAndCategoryByPetId(Long petId);
 
     List<PetNameAndCategoryTitleByCategoryIdResponseDto> getPetNameAndCategoryTitleByCategoryId(Long categoryId);
+
+    void updatePet(UpdatePetRequestDto updatePetRequestDto);
+
+    List<PetAndCategoryAndImageByPetIdResponseDto> getAllPetCategoryImageByPetId(Long petId);
+
+    List<AllPetImageResponseDto> getAllPetImage(Long petId);
 }

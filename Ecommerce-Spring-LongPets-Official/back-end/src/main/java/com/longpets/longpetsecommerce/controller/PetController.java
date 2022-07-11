@@ -1,8 +1,7 @@
 package com.longpets.longpetsecommerce.controller;
 
-import com.longpets.longpetsecommerce.dto.response.AllPetSearchByNameResponseDto;
-import com.longpets.longpetsecommerce.dto.response.PetAndCategoryByPetIdResponseDto;
-import com.longpets.longpetsecommerce.dto.response.PetNameAndCategoryTitleByCategoryIdResponseDto;
+import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
+import com.longpets.longpetsecommerce.dto.response.*;
 import com.longpets.longpetsecommerce.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +28,20 @@ public class PetController {
     @GetMapping("/get-all-pet-name-by-category-id/{categoryId}")
     List<PetNameAndCategoryTitleByCategoryIdResponseDto> getPetNameAndCategoryTitleByCategoryId(@PathVariable(value = "categoryId") Long categoryId) {
         return petService.getPetNameAndCategoryTitleByCategoryId(categoryId);
+    }
+
+    @PutMapping("/update-pet")
+    void updatePet(@RequestBody UpdatePetRequestDto updatePetRequestDto) {
+        petService.updatePet(updatePetRequestDto);
+    }
+
+    @GetMapping("/get-pet-by-pet-id/{petId}")
+    List<PetAndCategoryAndImageByPetIdResponseDto> getPetCategoryImage(@PathVariable(value = "petId") Long petId) {
+        return petService.getAllPetCategoryImageByPetId(petId);
+    }
+
+    @GetMapping("/get-all-pet-image/{petId}")
+    List<AllPetImageResponseDto> getAllPetImage(@PathVariable(value = "petId") Long petId) {
+        return petService.getAllPetImage(petId);
     }
 }
