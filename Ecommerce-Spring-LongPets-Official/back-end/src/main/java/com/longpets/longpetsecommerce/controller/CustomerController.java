@@ -29,6 +29,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -64,13 +65,13 @@ public class CustomerController {
     }
 
     @PostMapping("/role/add-to-user")
-    public ResponseEntity<?>addRoleToUser(@RequestBody AddRoleToCustomerRequestDto roleToUserForm) {
+    public ResponseEntity<?>addRoleToUser(@Valid @RequestBody AddRoleToCustomerRequestDto roleToUserForm) {
         customerService.addRoleToCustomer(roleToUserForm.getCustomerEmail(), roleToUserForm.getRoleName());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?>registerCustomer(@RequestBody RegisterRequestDto customer) {
+    public ResponseEntity<?>registerCustomer(@Valid @RequestBody RegisterRequestDto customer) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/register").toUriString());
         return ResponseEntity.created(uri).body(customerService.registerCustomer(customer));
     }
@@ -86,7 +87,7 @@ public class CustomerController {
     };
 
     @PutMapping("/update-customer")
-    public void updateCustomer(@RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
+    public void updateCustomer(@Valid @RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
         customerService.updateCustomer(updateCustomerRequestDto);
     }
 

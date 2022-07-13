@@ -3,17 +3,17 @@ package com.longpets.longpetsecommerce.dto.request;
 import javax.validation.constraints.NotBlank;
 
 public class AdminLogUpdateDto {
-    @NotBlank(message = "Hình đại diện không được trống")
+    @NotBlank(message = "Image can't be empty")
     private String logAvatar;
 
-    @NotBlank(message = "Nội dung log không được trống")
+    @NotBlank(message = "Content can't be empty")
     private String logContent;
 
     public AdminLogUpdateDto() {
     }
 
-    public AdminLogUpdateDto(@NotBlank(message = "Hình đại diện không được trống") String logAvatar,
-            @NotBlank(message = "Nội dung log không được trống") String logContent) {
+    public AdminLogUpdateDto(@NotBlank(message = "Image can't be empty") String logAvatar,
+            @NotBlank(message = "Content can't be empty") String logContent) {
         this.logAvatar = logAvatar;
         this.logContent = logContent;
     }

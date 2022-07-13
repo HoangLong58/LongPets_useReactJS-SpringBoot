@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class PetController {
     }
 
     @PutMapping("/update-pet")
-    void updatePet(@RequestBody UpdatePetRequestDto updatePetRequestDto) {
+    void updatePet(@Valid @RequestBody UpdatePetRequestDto updatePetRequestDto) {
         petService.updatePet(updatePetRequestDto);
     }
 
@@ -48,7 +49,7 @@ public class PetController {
     }
 
     @PostMapping("/add-new-pet")
-    void addNewPet(@RequestBody NewPetRequestDto newPetRequestDto) {
+    void addNewPet(@Valid @RequestBody NewPetRequestDto newPetRequestDto) {
         petService.addNewPet(newPetRequestDto);
     }
 

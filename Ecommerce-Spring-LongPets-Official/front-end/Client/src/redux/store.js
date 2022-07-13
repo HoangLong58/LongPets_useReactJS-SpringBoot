@@ -12,11 +12,16 @@ import {
     REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import authToken from "../authToken.js"
 
 const persistConfig = {
     key: 'root',
     version: 1,
     storage,
+}
+
+if(localStorage.jwtToken) {
+  authToken(localStorage.jwtToken);
 }
 
 const rootReducer = combineReducers({user: userReducer, cart: cartReducer});

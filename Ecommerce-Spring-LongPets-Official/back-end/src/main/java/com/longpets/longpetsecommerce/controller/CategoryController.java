@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -44,7 +45,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update-category")
-    ResponseEntity<?> updateCategory(@RequestBody CategoryUpdateRequestDto categoryUpdateRequestDto) {
+    ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryUpdateRequestDto categoryUpdateRequestDto) {
        return ResponseEntity.ok().body(categoryService.updateCategory(categoryUpdateRequestDto));
     }
 
@@ -54,7 +55,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add-category")
-    void addCategory(@RequestBody NewCategoryRequestDto newCategoryRequestDto) {
+    void addCategory(@Valid @RequestBody NewCategoryRequestDto newCategoryRequestDto) {
        categoryService.addCategory(newCategoryRequestDto.getCategoryName(), newCategoryRequestDto.getCategoryTitle(), newCategoryRequestDto.getCategoryImage());
     }
 

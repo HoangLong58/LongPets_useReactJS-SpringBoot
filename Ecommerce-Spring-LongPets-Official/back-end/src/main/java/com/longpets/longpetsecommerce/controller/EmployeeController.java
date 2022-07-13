@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
@@ -45,13 +46,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/role/add-to-user")
-    public ResponseEntity<?>addRoleToUser(@RequestBody AddRoleToEmployeeRequestDto roleToUserForm) {
+    public ResponseEntity<?>addRoleToUser(@Valid @RequestBody AddRoleToEmployeeRequestDto roleToUserForm) {
         employeeService.addRoleToEmployee(roleToUserForm.getEmployeeEmail(), roleToUserForm.getRoleName());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?>registerEmployee(@RequestBody AdminRegisterRequestDto employee) {
+    public ResponseEntity<?>registerEmployee(@Valid @RequestBody AdminRegisterRequestDto employee) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/register").toUriString());
         return ResponseEntity.created(uri).body(employeeService.registerEmployee(employee));
     }

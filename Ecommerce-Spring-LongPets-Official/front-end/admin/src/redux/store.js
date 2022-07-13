@@ -17,6 +17,10 @@ const persistConfig = {
     version: 1,
     storage,
 }
+
+if(localStorage.jwtTokenAdmin) {
+  authToken(localStorage.jwtTokenAdmin);
+}
   
 const persistedReducer = persistReducer(persistConfig, adminReducer)
 export const store = configureStore({

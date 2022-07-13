@@ -9,6 +9,7 @@ import com.longpets.longpetsecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class OrderController {
     }
 
     @PostMapping("/add-order")
-    void addOrder(@RequestBody AddOrderRequestDto addOrderRequestDto) {
+    void addOrder(@Valid @RequestBody AddOrderRequestDto addOrderRequestDto) {
         orderService.addOrder(addOrderRequestDto);
     }
 
@@ -118,7 +119,7 @@ public class OrderController {
     }
 
     @PutMapping("/accept-order")
-    void acceptOrder(@RequestBody AcceptOrderRequestDto acceptOrderRequestDto) {
+    void acceptOrder(@Valid @RequestBody AcceptOrderRequestDto acceptOrderRequestDto) {
         try {
             orderService.acceptOrder(acceptOrderRequestDto.getOrderId(), acceptOrderRequestDto.getEmployeeId(), acceptOrderRequestDto.getEmployeeName(), acceptOrderRequestDto.getEmployeeAvatar());
         } catch (Exception exception) {
@@ -127,7 +128,7 @@ public class OrderController {
     }
 
     @PutMapping("/deny-order")
-    void denyOrder(@RequestBody DenyOrderRequestDto denyOrderRequestDto) {
+    void denyOrder(@Valid @RequestBody DenyOrderRequestDto denyOrderRequestDto) {
         try {
             orderService.denyOrder(denyOrderRequestDto.getOrderId(), denyOrderRequestDto.getEmployeeId(), denyOrderRequestDto.getEmployeeName(), denyOrderRequestDto.getEmployeeAvatar());
         } catch (Exception exception) {

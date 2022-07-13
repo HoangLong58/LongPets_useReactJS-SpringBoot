@@ -163,7 +163,7 @@ const Right = () => {
         // SỐ ĐƠN HÀNG HÔM NAY
         const getOrderNeedAllow = async () => {
             try {
-                const orderNeedAllow = await axios.get("http://localhost:8080/order/get-money-total-today");
+                const orderNeedAllow = await axios.get("http://localhost:8080/order/get-order-need-allow");
                 console.log("orderNeedAllow: ", orderNeedAllow);
                 setOrderNeedAllow(orderNeedAllow.data.orderQuantityNeedAllow);
             } catch (err) {

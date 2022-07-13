@@ -231,33 +231,45 @@ const Main = () => {
         const getTotalDog = async () => {
             if(day != "" && month != "" & year != "") {
                 const totalDogRes = await axios.get(`http://localhost:8080/order/get-dog-profit/${day}-${month}-${year}`);
+                setTotalDog(totalDogRes.data.moneyTotal);
+                setViewTotalDog(format_money((totalDogRes.data.moneyTotal).toString()))
+            } else {
+                const totalDogRes = await axios.get("http://localhost:8080/order/get-dog-profit-year");
+                setTotalDog(totalDogRes.data.moneyTotal);
+                setViewTotalDog(format_money((totalDogRes.data.moneyTotal).toString()))
             }
-            const totalDogRes = await axios.get("http://localhost:8080/order/get-dog-profit-year");
-            setTotalDog(totalDogRes.data.moneyTotal);
-            setViewTotalDog(format_money((totalDogRes.data.moneyTotal).toString()))
         }
         const getTotalCat = async () => {
             if(day != "" && month != "" & year != "") {
                 const totalCatRes = await axios.get(`http://localhost:8080/order/get-cat-profit/${day}-${month}-${year}`);
+                setTotalCat(totalCatRes.data.moneyTotal);
+                setViewTotalCat(format_money((totalCatRes.data.moneyTotal).toString()))
+            } else {
+                const totalCatRes = await axios.get("http://localhost:8080/order/get-cat-profit-year");
+                setTotalCat(totalCatRes.data.moneyTotal);
+                setViewTotalCat(format_money((totalCatRes.data.moneyTotal).toString()))
             }
-            const totalCatRes = await axios.get("http://localhost:8080/order/get-cat-profit-year");
-            setTotalCat(totalCatRes.data.moneyTotal);
-            setViewTotalCat(format_money((totalCatRes.data.moneyTotal).toString()))
+
         }
         const gettotalAnother = async () => {
             if(day != "" && month != "" & year != "") {
                 const totalAnotherRes = await axios.get(`http://localhost:8080/order/get-another-profit/${day}-${month}-${year}`);
+                setTotalAnother(totalAnotherRes.data.moneyTotal);
+                setViewTotalAnother(format_money((totalAnotherRes.data.moneyTotal).toString()))
+            } else {
+                const totalAnotherRes = await axios.get("http://localhost:8080/order/get-another-profit-year");
+                setTotalAnother(totalAnotherRes.data.moneyTotal);
+                setViewTotalAnother(format_money((totalAnotherRes.data.moneyTotal).toString()))
             }
-            const totalAnotherRes = await axios.get("http://localhost:8080/order/get-another-profit-year");
-            setTotalAnother(totalAnotherRes.data.moneyTotal);
-            setViewTotalAnother(format_money((totalAnotherRes.data.moneyTotal).toString()))
         }
         const gettotalMoney = async () => {
             if(day != "" && month != "" & year != "") {
                 const totalMoneyRes = await axios.get(`http://localhost:8080/order/get-money-total/${day}-${month}-${year}`);
+                setTotalMoney(totalMoneyRes.data.moneyTotal);
+            } else {
+                const totalMoneyRes = await axios.get("http://localhost:8080/order/get-money-total-year");
+                setTotalMoney(totalMoneyRes.data.moneyTotal);
             }
-            const totalMoneyRes = await axios.get("http://localhost:8080/order/get-money-total-year");
-            setTotalMoney(totalMoneyRes.data.moneyTotal);
         }
         // getThongKeTheoDanhMuc();
         getTotalDog();

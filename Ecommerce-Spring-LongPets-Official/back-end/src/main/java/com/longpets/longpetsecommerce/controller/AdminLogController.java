@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class AdminLogController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    AdminLogResponseDto createAdminLog(@RequestBody AdminLogUpdateDto dto) {
+    AdminLogResponseDto createAdminLog(@Valid @RequestBody AdminLogUpdateDto dto) {
         return this.adminLogService.createAdminLog(dto);
     }
 
