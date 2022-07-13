@@ -1,16 +1,18 @@
 package com.longpets.longpetsecommerce.controller;
 
+import com.longpets.longpetsecommerce.dto.request.NewPetRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
 import com.longpets.longpetsecommerce.dto.response.*;
 import com.longpets.longpetsecommerce.service.PetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3002"})
 @RequestMapping("/pet")
 public class PetController {
     private final PetService petService;
@@ -44,4 +46,31 @@ public class PetController {
     List<AllPetImageResponseDto> getAllPetImage(@PathVariable(value = "petId") Long petId) {
         return petService.getAllPetImage(petId);
     }
+
+    @PostMapping("/add-new-pet")
+    void addNewPet(@RequestBody NewPetRequestDto newPetRequestDto) {
+        petService.addNewPet(newPetRequestDto);
+    }
+
+    @DeleteMapping("/delete-pet/{petId}")
+    void deletePet(@PathVariable(value = "petId") Long petId) {
+        petService.deletePet(petId);
+    }
+
+    @GetMapping("/get-pet-category-image")
+    List<PetAndCategoryAndImageResponseDto> getPetAndCategoryAndImage() {
+        return petService.getPetAndCategoryAndImage();
+    }
+
+    @GetMapping("/get-pet-category-image-by-pet-name/{petName}")
+    List<PetAndCategoryAndImageResponseDto> getPetAndCategoryAndImageByPetName(@PathVariable(value = "petName") String petName) {
+        return petService.getPetAndCategoryAndImageByPetName(petName);
+    }
+
+    @GetMapping("/get-pet-quantity-count")
+    PetQuantityCountResponseDto getPetQuantityCount() {
+        return petService.getPetQuantityCount();
+    }
+
+
 }

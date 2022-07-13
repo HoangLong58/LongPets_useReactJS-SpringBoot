@@ -5,6 +5,7 @@ import com.longpets.longpetsecommerce.data.model.Employee;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.AdminRegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
+import com.longpets.longpetsecommerce.dto.response.EmployeeResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,5 +23,7 @@ public interface EmployeeService {
 
     Employee registerEmployee(AdminRegisterRequestDto employee);
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+    EmployeeResponseDto getEmployeeByEmail(String employeeEmail);
 //    ===========
 }

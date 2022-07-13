@@ -41,7 +41,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3002"})
 @RequestMapping("/customer")
 public class CustomerController {
     private final CustomerService customerService;

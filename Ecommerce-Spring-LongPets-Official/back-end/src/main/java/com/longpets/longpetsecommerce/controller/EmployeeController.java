@@ -7,6 +7,7 @@ import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AddRoleToEmployeeRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AdminRegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
+import com.longpets.longpetsecommerce.dto.response.EmployeeResponseDto;
 import com.longpets.longpetsecommerce.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3002"})
 @RequestMapping("/employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -58,5 +59,10 @@ public class EmployeeController {
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         employeeService.refreshToken(request, response);
+    }
+
+    @GetMapping("/get-employee-by-email/{employeeEmail}")
+    public EmployeeResponseDto getEmployeeByEmail(@PathVariable(value = "employeeEmail") String employeeEmail) {
+        return employeeService.getEmployeeByEmail(employeeEmail);
     }
 }

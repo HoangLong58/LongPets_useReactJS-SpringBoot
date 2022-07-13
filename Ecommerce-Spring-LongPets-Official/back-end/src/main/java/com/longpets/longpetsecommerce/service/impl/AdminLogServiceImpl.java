@@ -25,8 +25,8 @@ public class AdminLogServiceImpl implements AdminLogService {
 
 //    Get all admin_log
     @Override
-    public List<AdminLog> getAllAdminLogs() {
-        return this.adminLogRepository.findAll();
+    public List<AdminLogResponseDto> getAllAdminLogs() {
+        return this.adminLogRepository.find3AdminLog();
     }
 
     @Override

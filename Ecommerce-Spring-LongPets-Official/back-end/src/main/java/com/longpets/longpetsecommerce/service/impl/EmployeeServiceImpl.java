@@ -13,6 +13,7 @@ import com.longpets.longpetsecommerce.data.repository.EmployeeRepository;
 import com.longpets.longpetsecommerce.data.repository.RoleRepository;
 import com.longpets.longpetsecommerce.dto.request.AdminRegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
+import com.longpets.longpetsecommerce.dto.response.EmployeeResponseDto;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -141,5 +142,10 @@ public class EmployeeServiceImpl implements EmployeeService, UserDetailsService 
         Role role = roleRepository.findByRoleName("ROLE_ADMIN");
         employee.getRoles().add(role);
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public EmployeeResponseDto getEmployeeByEmail(String employeeEmail) {
+        return employeeRepository.getEmployeeByEmail(employeeEmail);
     }
 }
