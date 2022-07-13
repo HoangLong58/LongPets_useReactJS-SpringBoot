@@ -58,5 +58,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Order> orders = new HashSet<>();
+//    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders;
 }

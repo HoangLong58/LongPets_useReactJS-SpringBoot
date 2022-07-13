@@ -1,5 +1,6 @@
 package com.longpets.longpetsecommerce.service;
 
+import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.dto.request.NewPetRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
 import com.longpets.longpetsecommerce.dto.response.*;
@@ -28,6 +29,10 @@ public interface PetService {
     List<PetAndCategoryAndImageResponseDto> getPetAndCategoryAndImageByPetName(String petName);
 
     PetQuantityCountResponseDto getPetQuantityCount();
+
+//    ===================================== FIX =================================
+    List<PetResponseDto> findAllPet();
+
 
 
 }

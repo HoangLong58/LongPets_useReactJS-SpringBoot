@@ -1,5 +1,6 @@
 package com.longpets.longpetsecommerce.service.impl;
 
+import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.repository.PetRepository;
 import com.longpets.longpetsecommerce.dto.request.NewPetRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
@@ -7,6 +8,8 @@ import com.longpets.longpetsecommerce.dto.response.*;
 import com.longpets.longpetsecommerce.exception.ApiRequestException;
 import com.longpets.longpetsecommerce.service.PetService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +22,9 @@ import java.util.List;
 public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
+
+    private final ModelMapper modelMapper;
+
     @Override
     public List<AllPetSearchByNameResponseDto> getAllPetSearchByName(String petName) {
         List<AllPetSearchByNameResponseDto> allPetSearchByNameResponseDtos = new ArrayList<>();
@@ -161,5 +167,15 @@ public class PetServiceImpl implements PetService {
     @Override
     public PetQuantityCountResponseDto getPetQuantityCount() {
         return petRepository.getPetQuantityCount();
+    }
+
+//  ================================ FIX =============================
+    @Override
+    public List<PetResponseDto> findAllPet() {
+        List<Pet> pets = petRepository.findAll();
+        List<PetResponseDto> petResponseDtos = modelMapper.map(pets,
+                new TypeToken<List<PetResponseDto>>() {
+                }.getType());
+        return petResponseDtos;
     }
 }

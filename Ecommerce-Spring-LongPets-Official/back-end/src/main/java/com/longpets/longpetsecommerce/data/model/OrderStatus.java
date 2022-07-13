@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,5 +29,6 @@ public class OrderStatus {
 
     @OneToMany(mappedBy = "orderStatusOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Order> orders = new HashSet<>();
+//    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders;
 }

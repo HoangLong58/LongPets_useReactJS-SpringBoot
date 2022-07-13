@@ -73,5 +73,11 @@ public class PetController {
         return petService.getPetQuantityCount();
     }
 
+//    ============================== FIX ================================
+    @GetMapping("/get-all-pet")
+    List<PetResponseDto> getAllPet() {
+        return petService.findAllPet();
+    }
+
 
 }

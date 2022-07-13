@@ -84,4 +84,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
     @Query(value = "delete from order_detail where pet_id = ?;",
             nativeQuery = true)
     void deletePetOrderDetail(Long petId);
+
+//    =================================== FIX =====================================
+    List<Pet> findAll();
 }

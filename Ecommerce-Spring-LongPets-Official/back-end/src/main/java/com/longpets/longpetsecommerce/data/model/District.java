@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,6 +37,6 @@ public class District {
 
     @OneToMany(mappedBy = "districtWard", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-//    @JsonManagedReference
-    private Set<Ward> wards = new HashSet<>();
+//    private Set<Ward> wards = new HashSet<>();
+    private List<Ward> wards;
 }

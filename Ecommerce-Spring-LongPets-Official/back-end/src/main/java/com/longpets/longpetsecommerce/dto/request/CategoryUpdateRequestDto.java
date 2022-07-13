@@ -7,10 +7,6 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class CategoryUpdateRequestDto {
-    @NotNull(message = "categoryId can't be empty")
-    @Min(value = 0, message = "categoryId can't be negative")
-    private Long categoryId;
-
     @NotNull(message = "categoryName can't be empty")
     private String categoryName;
 

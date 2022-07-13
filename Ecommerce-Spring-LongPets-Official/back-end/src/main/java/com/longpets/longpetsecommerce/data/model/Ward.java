@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,14 +38,17 @@ public class Ward {
 
     @OneToMany(mappedBy = "wardEmployee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Employee> employees = new HashSet<>();
+//    private Set<Employee> employees = new HashSet<>();
+    private List<Employee> employees;
 
     @OneToMany(mappedBy = "wardOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Order> orders = new HashSet<>();
+//    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders;
 
     @OneToMany(mappedBy = "wardCustomer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Customer> customers = new HashSet<>();
+//    private Set<Customer> customers = new HashSet<>();
+    private List<Customer> customers;
 
 }

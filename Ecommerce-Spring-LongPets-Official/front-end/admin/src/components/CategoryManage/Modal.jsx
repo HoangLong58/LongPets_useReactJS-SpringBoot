@@ -209,7 +209,7 @@ const Modal = ({ showModal, setShowModal, type, category, setReRenderData, handl
 
         if (newCategoryName !== "" && newCategoryTitle !== "" && newCategoryImage !== "") {
             try {
-                const updateCategoryRes = await axios.put("http://localhost:8080/category/update-category", { categoryName: newCategoryName, categoryTitle: newCategoryTitle, categoryImage: newCategoryImage, categoryId: categoryId });
+                const updateCategoryRes = await axios.put(`http://localhost:8080/category/update-category/${categoryId}`, { categoryName: newCategoryName, categoryTitle: newCategoryTitle, categoryImage: newCategoryImage });
                 console.log("KQ trả về update: ", updateCategoryRes);
                 setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx
                 setShowModal(prev => !prev);
@@ -239,17 +239,17 @@ const Modal = ({ showModal, setShowModal, type, category, setReRenderData, handl
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const categoryRes = await axios.get(`http://localhost:8080/category/find-category-by-category-id/${category.categoryId}`);
+                const categoryRes = await axios.get(`http://localhost:8080/category/get-category/${category.categoryId}`);
                 setCategoryModal(categoryRes.data);
-                setCategoryIdModal(categoryRes.data[0].categoryId);
-                setCategoryNameModal(categoryRes.data[0].categoryName);
-                setCategoryTitleModal(categoryRes.data[0].categoryTitle);
-                setCategoryImageModal(categoryRes.data[0].categoryImage);
+                setCategoryIdModal(categoryRes.data.categoryId);
+                setCategoryNameModal(categoryRes.data.categoryName);
+                setCategoryTitleModal(categoryRes.data.categoryTitle);
+                setCategoryImageModal(categoryRes.data.categoryImage);
 
-                setCategoryIdModalOld(categoryRes.data[0].categoryId);
-                setCategoryNameModalOld(categoryRes.data[0].categoryName);
-                setCategoryTitleModalOld(categoryRes.data[0].categoryTitle);
-                setCategoryImageModalOld(categoryRes.data[0].categoryImage);
+                setCategoryIdModalOld(categoryRes.data.categoryId);
+                setCategoryNameModalOld(categoryRes.data.categoryName);
+                setCategoryTitleModalOld(categoryRes.data.categoryTitle);
+                setCategoryImageModalOld(categoryRes.data.categoryImage);
             } catch (err) {
                 console.log("Lỗi lấy danh mục: ", err);
             }
@@ -453,13 +453,14 @@ const Modal = ({ showModal, setShowModal, type, category, setReRenderData, handl
     const handleAddCategory = async ({ newCategoryName, newCategoryTitle, linkImage }) => {
         if (newCategoryName !== "" && newCategoryTitle !== "" && linkImage !== null) {
             try {
-                const insertcategoryRes = axios.post("http://localhost:8080/category/add-category", { categoryName: newCategoryName, categoryTitle: newCategoryTitle, categoryImage: linkImage });
-                console.log("KQ trả về update: ", insertcategoryRes);
-                setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx
-                setShowModal(prev => !prev);
-                const dataShow = { message: "Thêm danh mục " + newCategoryName + " thành công!", type: "success" };
-                showToastFromOut(dataShow);
-                setLinkImage(null);
+                const insertcategoryRes = axios.post("http://localhost:8080/category/add-category", { categoryName: newCategoryName, categoryTitle: newCategoryTitle, categoryImage: linkImage }).then(() => {
+                    console.log("KQ trả về update: ", insertcategoryRes);
+                    setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx
+                    setShowModal(prev => !prev);
+                    const dataShow = { message: "Thêm danh mục " + newCategoryName + " thành công!", type: "success" };
+                    showToastFromOut(dataShow);
+                    setLinkImage(null);
+                });
             } catch (err) {
                 console.log("Lỗi insert: ", err);
                 setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx

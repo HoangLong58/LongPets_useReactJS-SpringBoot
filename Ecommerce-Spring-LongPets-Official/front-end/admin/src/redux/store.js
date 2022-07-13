@@ -1,5 +1,6 @@
 import { configureStore} from "@reduxjs/toolkit";
 import adminReducer from "./adminRedux";
+import authToken from "../authToken.js"
 import {
     persistStore,
     persistReducer,

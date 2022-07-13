@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -60,9 +61,11 @@ public class Pet {
 
     @OneToMany(mappedBy = "petOrderDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<OrderDetail> orderDetails = new HashSet<>();
+//    private Set<OrderDetail> orderDetails = new HashSet<>();
+    private List<OrderDetail> orderDetails;
 
     @OneToMany(mappedBy = "petImage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Image> images = new HashSet<>();
+//    private Set<Image> images = new HashSet<>();
+    private List<Image> images;
 }

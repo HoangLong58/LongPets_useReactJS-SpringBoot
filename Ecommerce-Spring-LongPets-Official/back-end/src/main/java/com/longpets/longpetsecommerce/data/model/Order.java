@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -63,5 +64,6 @@ public class Order {
 
     @OneToMany(mappedBy = "orderOrderDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<OrderDetail> orderDetails = new HashSet<>();
+//    private Set<OrderDetail> orderDetails = new HashSet<>();
+    private List<OrderDetail> orderDetails;
 }

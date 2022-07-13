@@ -259,7 +259,7 @@ const Product = ({ item }) => {
 
         <Container styled={{ display: "flex" }}>
             <Circle />
-            <Image src={item.imageContent} />
+            <Image src={item.images[0].imageContent} />
             <Info>
                 <Icon>
                     <ShoppingCartOutlined />
