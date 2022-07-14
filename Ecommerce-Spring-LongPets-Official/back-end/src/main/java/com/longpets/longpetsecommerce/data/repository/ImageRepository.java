@@ -12,4 +12,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query(value = "select i.image_id ,i.image_content from pet p join image i on p.pet_id = i.pet_id where p.pet_id = ?",
             nativeQuery = true)
     List<PetImageResponseDto> getPetImage(Long petId);
+//    ================================================ FIX ========================================
+
 }

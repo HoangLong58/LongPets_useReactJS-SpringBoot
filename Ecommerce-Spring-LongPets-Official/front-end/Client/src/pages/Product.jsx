@@ -202,17 +202,17 @@ const Product = () => {
                     }
                 });
             })
-            setPetTitle(pet.data[0].petTitle);
-            setPetDescription(pet.data[0].petDescription);
-            setPetName(pet.data[0].petName);
-            setCategoryName(pet.data[0].categoryName);
-            setPetGender(pet.data[0].petGender);
-            setPetAge(pet.data[0].petAge);
-            setPetVaccinated(pet.data[0].petVaccinated);
-            setPetHealthWarranty(pet.data[0].petHealthWarranty);
-            setPetPriceDiscountString(format_money(pet.data[0].petPriceDiscount.toString()));
-            setPetPriceDiscount(pet.data[0].petPriceDiscount);
-            setPetQuantity(pet.data[0].petQuantity);
+            setPetTitle(pet.data.petTitle);
+            setPetDescription(pet.data.petDescription);
+            setPetName(pet.data.petName);
+            setCategoryName(pet.data.categoryPet.categoryName);
+            setPetGender(pet.data.petGender);
+            setPetAge(pet.data.petAge);
+            setPetVaccinated(pet.data.petVaccinated);
+            setPetHealthWarranty(pet.data.petHealthWarranty);
+            setPetPriceDiscountString(format_money(pet.data.petPriceDiscount.toString()));
+            setPetPriceDiscount(pet.data.petPriceDiscount);
+            setPetQuantity(pet.data.petQuantity);
         };
         getProduct();
     }, [petId]);
@@ -242,7 +242,7 @@ const Product = () => {
 
         // let i, isHave, soluongmuonmua = 0;
         // for(i=0; i< cart.products.length; i++){
-        //     if(cart.products[i].data[0].petId === parseInt(petId)){
+        //     if(cart.products[i].data.petId === parseInt(petId)){
         //         isHave = true;
         //         soluongmuonmua = cart.products[i].soluongmua;
         //         break;
@@ -265,7 +265,7 @@ const Product = () => {
 
         // let i, isHave, soluongmua;
         // for(i=0; i< cart.products.length; i++){
-        //     if(cart.products[i].data[0].petId === parseInt(petId)){
+        //     if(cart.products[i].data.petId === parseInt(petId)){
         //         isHave = true;
         //         break;
         //     }
@@ -292,7 +292,7 @@ const Product = () => {
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    {/* <Image src={image[0]} /> */}
+                    {/* <Image src={image} /> */}
                     <MoreImage >
                         <SliderImage image={image} />
                     </MoreImage>

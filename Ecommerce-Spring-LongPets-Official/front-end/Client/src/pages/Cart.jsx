@@ -218,17 +218,17 @@ const Cart = () => {
                 <>
                   <Product>
                     <ProductDetail>
-                      <MiniImage item={product.data[0].petId}></MiniImage>
+                      <MiniImage item={product.data.petId}></MiniImage>
                       <Details>
-                        <ProductName><b style={{ marginRight: "10px" }}>Tiêu đề:</b>{product.data[0].petTitle}</ProductName>
-                        <ProductId><b style={{ marginRight: "5px" }}>Phân loại:</b> {product.data[0].categoryName}</ProductId>
-                        <ProductId><b style={{ marginRight: "5px" }}>Tên thú cưng:</b> {product.data[0].petName}</ProductId>
-                        <ProductId><b style={{ marginRight: "5px" }}>ID:</b> {product.data[0].PetId}</ProductId>
+                        <ProductName><b style={{ marginRight: "10px" }}>Tiêu đề:</b>{product.data.petTitle}</ProductName>
+                        <ProductId><b style={{ marginRight: "5px" }}>Phân loại:</b> {product.data.categoryPet.categoryName}</ProductId>
+                        <ProductId><b style={{ marginRight: "5px" }}>Tên thú cưng:</b> {product.data.petName}</ProductId>
+                        <ProductId><b style={{ marginRight: "5px" }}>ID:</b> {product.data.PetId}</ProductId>
                       </Details>
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
-                        <div onClick={() => product.petQuantityBuy < product.data[0].petQuantity && handleRemove(1)}>
+                        <div onClick={() => product.petQuantityBuy < product.data.petQuantity && handleRemove(1)}>
                           <Add />
                         </div>
                         <ProductAmount>{product.petQuantityBuy}</ProductAmount>
@@ -236,7 +236,7 @@ const Cart = () => {
                           <Remove />
                         </div>
                       </ProductAmountContainer>
-                      <ProductPrice>{format_money((product.petQuantityBuy * product.data[0].petPriceDiscount).toString())} <b><u>đ</u></b></ProductPrice>
+                      <ProductPrice>{format_money((product.petQuantityBuy * product.data.petPriceDiscount).toString())} <b><u>đ</u></b></ProductPrice>
                     </PriceDetail>
                     <RemoveProduct onClick={() => handleRemove(0)}><Close className="remove-product" /></RemoveProduct>
                   </Product>

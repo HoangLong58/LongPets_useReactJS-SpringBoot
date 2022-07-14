@@ -243,12 +243,12 @@ const Order = () => {
         setCustomerPhone(user ? user.customerPhone : "");
         setCustomerAddress(user ? user.customerAddress : "");
 
-        setWardId(user ? user.wardId : "");
-        setDistrictId(user ? user.districtId : "");
-        setCityId(user ? user.cityId : "");
-        setWardName(user ? user.wardName : "");
-        setDistrictName(user ? user.districtName : "");
-        setCityName(user ? user.cityName : "");
+        setWardId(user ? user.wardCustomer.wardId : "");
+        setDistrictId(user ? user.wardCustomer.districtWard.districtId : "");
+        setCityId(user ? user.wardCustomer.districtWard.cityDistrict.cityId : "");
+        setWardName(user ? user.wardCustomer.wardName : "");
+        setDistrictName(user ? user.wardCustomer.districtWard.districtName : "");
+        setCityName(user ? user.wardCustomer.districtWard.cityDistrict.cityName : "");
     }, [])
 
     // Effect Tỉnh - Huyện - Xã (Có user)
@@ -393,7 +393,7 @@ const Order = () => {
                                     cart.products.map((pet, key) => {
                                         return (
                                             <Carousel.Item>
-                                                <DatMuaImage item={pet.data[0].petId}></DatMuaImage>
+                                                <DatMuaImage item={pet.data.petId}></DatMuaImage>
                                             </Carousel.Item>
                                         );
                                     })
@@ -407,10 +407,10 @@ const Order = () => {
                                             <Circle />
                                             <Course>
                                                 <Content>
-                                                    <span style={{ width: "320px", fontWeight: "bold" }}> {pet.data[0].petTitle} </span>
-                                                    <span style={{ fontWeight: "400", color: "var(--color-primary)", width: "145px", textAlign: "right" }}>{format_money((pet.data[0].petPriceDiscount).toString())} VNĐ</span>
+                                                    <span style={{ width: "320px", fontWeight: "bold" }}> {pet.data.petTitle} </span>
+                                                    <span style={{ fontWeight: "400", color: "var(--color-primary)", width: "145px", textAlign: "right" }}>{format_money((pet.data.petPriceDiscount).toString())} VNĐ</span>
                                                 </Content>
-                                                <span style={{ fontWeight: "400" }}><span style={{ color: "var(--color-primary)" }}>{pet.petQuantityBuy}</span> x {pet.data[0].petName}</span>
+                                                <span style={{ fontWeight: "400" }}><span style={{ color: "var(--color-primary)" }}>{pet.petQuantityBuy}</span> x {pet.data.petName}</span>
                                             </Course>
                                         </CartItem>
                                     );

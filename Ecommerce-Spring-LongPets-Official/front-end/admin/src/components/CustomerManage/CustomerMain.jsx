@@ -306,7 +306,7 @@ const CustomerMain = ({ reRenderData, setReRenderData }) => {
     useEffect(() => {
         const getCustomer = async () => {
             try {
-                const customerRes = await axios.get("http://localhost:8080/customer/get-customer");
+                const customerRes = await axios.get("http://localhost:8080/customer/users");
                 setCustomer(customerRes.data);
             } catch (err) {
                 console.log("Lỗi lấy khách hàng: ", err);

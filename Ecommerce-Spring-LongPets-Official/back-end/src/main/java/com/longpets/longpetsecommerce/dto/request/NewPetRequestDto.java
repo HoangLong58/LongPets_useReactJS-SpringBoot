@@ -1,12 +1,16 @@
 package com.longpets.longpetsecommerce.dto.request;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class NewPetRequestDto {
     @NotNull(message = "categoryId can't be empty")
     @Min(value = 0, message = "categoryId can't be negative")

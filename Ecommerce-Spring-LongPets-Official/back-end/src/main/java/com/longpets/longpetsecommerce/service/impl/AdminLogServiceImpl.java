@@ -23,7 +23,7 @@ public class AdminLogServiceImpl implements AdminLogService {
         this.modelMapper = modelMapper;
     }
 
-//    Get all admin_log
+    //    Get all admin_log
     @Override
     public List<AdminLogResponseDto> getAllAdminLogs() {
         return this.adminLogRepository.find3AdminLog();

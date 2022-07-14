@@ -38,9 +38,9 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 //            nativeQuery = true)
 //    List<CategoryFindByCategoryNameResponseDto> getAllCategoryByName(String categoryName);
 
-    @Query(value = "select count(category_id) as category_quantity from category",
-            nativeQuery = true)
-    CategoryQuantityResponseDto getCategoryQuantity();
+//    @Query(value = "select count(category_id) as category_quantity from category",
+//            nativeQuery = true)
+//    CategoryQuantityResponseDto getCategoryQuantity();
 
 //    @Transactional
 //    @Modifying(clearAutomatically = true)

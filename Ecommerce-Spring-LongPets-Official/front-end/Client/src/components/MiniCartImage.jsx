@@ -23,7 +23,7 @@ const MiniCartImage = ({ item }) => {
         };
         getHinhAnh();
     }, []);
-    // console.log(hinhanh.data[0])
+    // console.log(hinhanh.data)
     return (
         <Image src={hinhanh}></Image>
     )

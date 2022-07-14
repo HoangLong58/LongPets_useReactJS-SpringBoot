@@ -1,5 +1,6 @@
 package com.longpets.longpetsecommerce.service.impl;
 
+import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.repository.OrderRepository;
 import com.longpets.longpetsecommerce.dto.request.AddOrderCartRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AddOrderRequestDto;
@@ -18,6 +19,7 @@ import java.util.List;
 @Transactional
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+
     @Override
     public List<AllOrderDetailOfOrderResponseDto> getAllOrderDetailOfOrder(Long orderId) {
         return orderRepository.getAllOrderDetailOfOrder(orderId);
@@ -30,11 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateUserCancelOrder(Long orderId) {
-        try {
-            orderRepository.updateUserCancelOrder(orderId);
-        } catch (Exception exception) {
-            throw new ApiRequestException("Error when update user cancel order");
-        }
+
+        orderRepository.updateUserCancelOrder(orderId);
+
 //        orderRepository.updateUserCancelOrder(orderId);
         List<AllDetailOrderByOrderIdResponseDto> allDetailOrderByOrderId = orderRepository.findAllDetailOrderByOrderId(orderId);
         if (allDetailOrderByOrderId.isEmpty()) {
@@ -49,46 +49,38 @@ public class OrderServiceImpl implements OrderService {
     public void addOrder(AddOrderRequestDto addOrderRequestDto) {
 //        Date order
         Date orderDate = new Date();
-
-        try {
-                orderRepository.addOrder(addOrderRequestDto.getCustomerId(),
-                        addOrderRequestDto.getWardId(),
+        orderRepository.addOrder(addOrderRequestDto.getCustomerId(),
+                addOrderRequestDto.getWardId(),
 //                    addOrderRequestDto.getEmployeeId(),
-                        addOrderRequestDto.getOrderName(),
-                        addOrderRequestDto.getOrderEmail(),
-                        addOrderRequestDto.getOrderPhone(),
-                        addOrderRequestDto.getOrderAddress(),
-                        addOrderRequestDto.getOrderNote(),
-                        orderDate,
+                addOrderRequestDto.getOrderName(),
+                addOrderRequestDto.getOrderEmail(),
+                addOrderRequestDto.getOrderPhone(),
+                addOrderRequestDto.getOrderAddress(),
+                addOrderRequestDto.getOrderNote(),
+                orderDate,
 //                    addOrderRequestDto.getOrderStatusId(),
-                        addOrderRequestDto.getOrderTotal());
-            } catch (Exception exception) {
-                throw new ApiRequestException("Error when add order");
-            }
-            List<OrderByOrderDateResponseDto> orders = orderRepository.getOrderByOrderDate(orderDate, addOrderRequestDto.getCustomerId(), addOrderRequestDto.getOrderPhone());
-            if (orders.isEmpty()) {
-                throw new ApiRequestException("Error: Can't find order");
-            }
-            OrderByOrderDateResponseDto order = orders.get(0);
-            List<AddOrderCartRequestDto> cartList = addOrderRequestDto.getCart();
-        System.out.printf("Order: "+cartList.get(0).toString());
-            cartList.stream().forEach(cartItem -> {
-                try {
-                    orderRepository.addOrderDetail(cartItem.getData().get(0).getPetId(),
-                            order.getOrderId(),
-                            cartItem.getData().get(0).getPetPriceDiscount(),
-                            cartItem.getPetQuantityBuy(),
-                            cartItem.getData().get(0).getPetPriceDiscount() * cartItem.getPetQuantityBuy());
-                } catch (Exception exception) {
-//                throw new ApiRequestException("Error: Can't add new order detail");
-                    throw exception;
-                }
-                try {
-                    orderRepository.updatePetQuantityAfterOrder(cartItem.getPetQuantityBuy(), cartItem.getData().get(0).getPetId());
-                } catch (Exception exception) {
-                    throw new ApiRequestException("Error: Can't update new quantity of pet");
-                }
-            });
+                addOrderRequestDto.getOrderTotal());
+
+        List<OrderByOrderDateResponseDto> orders = orderRepository.getOrderByOrderDate(
+                orderDate,
+                addOrderRequestDto.getCustomerId(),
+                addOrderRequestDto.getOrderPhone());
+        if (orders.isEmpty()) {
+            throw new ApiRequestException("Error: Can't find order");
+        }
+        OrderByOrderDateResponseDto order = orders.get(0);
+        List<AddOrderCartRequestDto> cartList = addOrderRequestDto.getCart();
+
+        cartList.stream().forEach(cartItem -> {
+            orderRepository.addOrderDetail(cartItem.getData().getPetId(),
+                    order.getOrderId(),
+                    cartItem.getData().getPetPriceDiscount(),
+                    cartItem.getPetQuantityBuy(),
+                    cartItem.getData().getPetPriceDiscount() * cartItem.getPetQuantityBuy());
+
+            orderRepository.updatePetQuantityAfterOrder(cartItem.getPetQuantityBuy(), cartItem.getData().getPetId());
+
+        });
     }
 
     @Override
@@ -173,37 +165,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void acceptOrder(Long orderId, Long employeeId, String employeeName, String employeeAvatar) {
-        try {
-            orderRepository.acceptOrder(employeeId, orderId);
-            try {
-                orderRepository.addLog(employeeName, orderId, employeeAvatar);
-            } catch(Exception exception){
-                throw new ApiRequestException("Error: Can't add this log");
-            }
-        } catch(Exception exception) {
-            throw new ApiRequestException("Error: Can't accecpt this order");
-        }
+
+        orderRepository.acceptOrder(employeeId, orderId);
+
+        orderRepository.addLog(employeeName, orderId, employeeAvatar);
     }
 
     @Override
     public void denyOrder(Long orderId, Long employeeId, String employeeName, String employeeAvatar) {
-        try {
-            orderRepository.denyOrder(employeeId, orderId);
-            try {
-                List<AllDetailOrderByOrderIdResponseDto> allDetailOrderByOrderIds = orderRepository.findAllDetailOrderByOrderId(orderId);
-                try {
-                    allDetailOrderByOrderIds.stream().forEach(detailOrder -> {
-                        orderRepository.updatePetQuantityAfterDeny(detailOrder.getOrderDetailQuantity(), detailOrder.getPetId());
-                    });
-                    orderRepository.addLogDeny(employeeName, orderId, employeeAvatar);
-                } catch (Exception exception) {
-                    throw new ApiRequestException("Error: when update pet quantity of deny order");
-                }
-            } catch (Exception exception) {
-                throw new ApiRequestException("Error: when get all detail order by order id");
-            }
-        } catch (Exception exception) {
-            throw new ApiRequestException("Error: Can't deny this order");
-        }
+
+        orderRepository.denyOrder(employeeId, orderId);
+
+        List<AllDetailOrderByOrderIdResponseDto> allDetailOrderByOrderIds = orderRepository.findAllDetailOrderByOrderId(orderId);
+
+        allDetailOrderByOrderIds.stream().forEach(detailOrder -> {
+            orderRepository.updatePetQuantityAfterDeny(detailOrder.getOrderDetailQuantity(), detailOrder.getPetId());
+        });
+        orderRepository.addLogDeny(employeeName, orderId, employeeAvatar);
     }
 }

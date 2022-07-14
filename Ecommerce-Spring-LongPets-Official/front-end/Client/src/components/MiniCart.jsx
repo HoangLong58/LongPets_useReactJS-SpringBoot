@@ -223,19 +223,19 @@ const MiniCart = ({ item }) => {
                             return (
                                 <>
                                     <LiItem>
-                                        <MiniCartImage item={product.data[0].petId}></MiniCartImage>
+                                        <MiniCartImage item={product.data.petId}></MiniCartImage>
                                         <ItemInfo>
                                             <ItemHead>
-                                                <ItemName>{product.data[0].petTitle}</ItemName>
+                                                <ItemName>{product.data.petTitle}</ItemName>
                                                 <ItemPriceWrap>
-                                                    <ItemPrice>{format_money(product.data[0].petPriceDiscount.toString())}</ItemPrice>
+                                                    <ItemPrice>{format_money(product.data.petPriceDiscount.toString())}</ItemPrice>
                                                     <ItemMultiply>x</ItemMultiply>
                                                     <ItemQnt>{product.petQuantityBuy}</ItemQnt>
                                                 </ItemPriceWrap>
                                             </ItemHead>
                                             <ItemBody>
                                                 <ItemDescription>
-                                                    Phân loại: {product.data[0].categoryName}
+                                                    Phân loại: {product.data.categoryPet.categoryName}
                                                 </ItemDescription>
                                                 <div onClick={() => handleRemove(0)}>
                                                     <Remove>Xóa</Remove>

@@ -307,7 +307,7 @@ const PetMain = ({ reRenderData, setReRenderData }) => {
     useEffect(() => {
         const getPet = async () => {
             try {
-                const petRes = await axios.get("http://localhost:8080/pet/get-pet-category-image");
+                const petRes = await axios.get("http://localhost:8080/pet/get-all-pet");
                 setPet(petRes.data);
             } catch (err) {
                 console.log("Lỗi lấy thú cưng: ", err);
@@ -318,7 +318,7 @@ const PetMain = ({ reRenderData, setReRenderData }) => {
     useEffect(() => {
         const findPet = async () => {
             try {
-                const finPetRes = await axios.get(`http://localhost:8080/pet/get-pet-category-image-by-pet-name/${search}`);
+                const finPetRes = await axios.get(`http://localhost:8080/pet/find-pet-by-name/${search}`);
                 setPet(finPetRes.data);
                 console.log("Kết quả tìm trong effect: ", finPetRes.data);
             } catch (err) {
@@ -365,10 +365,10 @@ const PetMain = ({ reRenderData, setReRenderData }) => {
             return (
                 <Tr>
                     <Td>{petItem.petId}</Td>
-                    <Td>{petItem.categoryName}</Td>
+                    <Td>{petItem.categoryPet.categoryName}</Td>
                     <Td>{petItem.petName}</Td>
                     <Td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <ImgDanhMuc src={petItem.imageContent} />
+                        <ImgDanhMuc src={petItem.images[0].imageContent} />
                     </Td>
                     <Td>{petItem.petQuantity}</Td>
                     <Td>{petItem.petPrice ? format_money((petItem.petPrice).toString()) : null}</Td>
@@ -444,10 +444,10 @@ const PetMain = ({ reRenderData, setReRenderData }) => {
                                 (pet.slice(0, 12).map(petItem => (
                                     <Tr>
                                         <Td>{petItem.petId}</Td>
-                                        <Td>{petItem.categoryName}</Td>
+                                        <Td>{petItem.categoryPet.categoryName}</Td>
                                         <Td>{petItem.petName}</Td>
                                         <Td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                            <ImgDanhMuc src={petItem.imageContent} />
+                                            <ImgDanhMuc src={petItem.images[0].imageContent} />
                                         </Td>
                                         <Td>{petItem.petQuantity}</Td>
                                         <Td>{petItem.petPrice}</Td>

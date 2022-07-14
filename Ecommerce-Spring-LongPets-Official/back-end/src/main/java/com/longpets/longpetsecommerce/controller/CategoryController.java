@@ -2,12 +2,9 @@ package com.longpets.longpetsecommerce.controller;
 
 import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
 import com.longpets.longpetsecommerce.dto.request.NewCategoryRequestDto;
-import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.response.*;
 import com.longpets.longpetsecommerce.service.CategoryService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,10 +37,10 @@ public class CategoryController {
 //        return categoryService.getAllCategoryByCategoryName(categoryName);
 //    }
 
-    @GetMapping("/get-category-quantity")
-    CategoryQuantityResponseDto getCategoryQuantity() {
-        return categoryService.getCategoryCategoryQuantity();
-    }
+//    @GetMapping("/get-category-quantity")
+//    CategoryQuantityResponseDto getCategoryQuantity() {
+//        return categoryService.getCategoryCategoryQuantity();
+//    }
 
 //    @PutMapping("/update-category")
 //    ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryUpdateRequestDto categoryUpdateRequestDto) {
@@ -107,5 +104,10 @@ public class CategoryController {
     @DeleteMapping("/delete-category/{categoryId}")
     void deleteCategory(@PathVariable @Min(0) Long categoryId) {
          categoryService.deleteCategory(categoryId);
+    }
+
+    @GetMapping("/get-category-quantity")
+    CategoryCountDto getCategoryQuantity() {
+        return categoryService.getCategoryCount();
     }
 }

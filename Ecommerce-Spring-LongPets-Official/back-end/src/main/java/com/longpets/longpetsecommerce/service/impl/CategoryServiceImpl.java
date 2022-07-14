@@ -21,7 +21,6 @@ import java.util.List;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
-
     private final ModelMapper modelMapper;
 
 //    @Override
@@ -50,10 +49,10 @@ public class CategoryServiceImpl implements CategoryService {
 //        return categoryRepository.getAllCategoryByName(categoryName);
 //    }
 
-    @Override
-    public CategoryQuantityResponseDto getCategoryCategoryQuantity() {
-        return categoryRepository.getCategoryQuantity();
-    }
+//    @Override
+//    public CategoryQuantityResponseDto getCategoryCategoryQuantity() {
+//        return categoryRepository.getCategoryQuantity();
+//    }
 
 //    @Override
 //    public Category updateCategory(CategoryUpdateRequestDto categoryUpdateRequestDto) {
@@ -86,6 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
 //    }
 
 //    =========================== FIX ===========================
+    @Override
     public List<CategoryResponseDto> getAllCategory() {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryResponseDto> categoryResponseDtos = modelMapper.map(categories,
@@ -95,6 +95,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryResponseDtos;
     }
 
+    @Override
     public CategoryResponseDto getCategoryByCategoryId(Long categoryId) {
          Category category = categoryRepository.findCategoryByCategoryId(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Can't find category with id "+ categoryId));
@@ -145,5 +146,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long categoryId) {
         categoryRepository.deleteById(categoryId);
+    }
+
+    @Override
+    public CategoryCountDto getCategoryCount() {
+        Long categoryCount = categoryRepository.count();
+        CategoryCountDto categoryCountDto = new CategoryCountDto();
+        categoryCountDto.setCategoryQuantity(categoryCount);
+        return categoryCountDto;
     }
 }

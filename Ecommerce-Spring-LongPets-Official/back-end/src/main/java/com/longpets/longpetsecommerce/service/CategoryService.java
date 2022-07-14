@@ -1,7 +1,5 @@
 package com.longpets.longpetsecommerce.service;
 
-import com.longpets.longpetsecommerce.data.model.AdminLog;
-import com.longpets.longpetsecommerce.data.model.Category;
 import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
 import com.longpets.longpetsecommerce.dto.request.NewCategoryRequestDto;
 import com.longpets.longpetsecommerce.dto.response.*;
@@ -43,8 +41,7 @@ public interface CategoryService {
 
     void deleteCategory(Long categoryId);
 
-    CategoryQuantityResponseDto getCategoryCategoryQuantity();
-
+    CategoryCountDto getCategoryCount();
 
 
 

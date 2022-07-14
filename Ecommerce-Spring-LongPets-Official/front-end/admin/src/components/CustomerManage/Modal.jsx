@@ -330,7 +330,7 @@ const Modal = ({ showModal, setShowModal, type, customer, setReRenderData, handl
     useEffect(() => {
         const getWardDistrictCity = async () => {
             try {
-                const wardDistrictCityRes = await axios.get(`http://localhost:8080/customer/get-ward-district-city/${customer.wardId}`);
+                const wardDistrictCityRes = await axios.get(`http://localhost:8080/customer/get-ward-district-city/${customer.wardCustomer.wardId}`);
                 setWardNameDistrictNameCityName(", " + wardDistrictCityRes.data.wardName + ", " + wardDistrictCityRes.data.districtName + ", " + wardDistrictCityRes.data.cityName);
             } catch(err) {
                 console.log("Lấy xã phường thị trấn, tp thất bại");
@@ -361,18 +361,18 @@ const Modal = ({ showModal, setShowModal, type, customer, setReRenderData, handl
                                         </ModalChiTietItem>
                                         <ModalChiTietItem style={{ flex: "1" }}>
                                             <FormSpan>Ngày sinh:</FormSpan>
-                                            <FormInput type="text" value={customer.customerBirthday.substring(0,10)} readOnly />
+                                            <FormInput type="text" value={customer.customerBirthday != null ? customer.customerBirthday.substring(0,10) : "Chưa cập nhật"} readOnly />
                                         </ModalChiTietItem>
                                         <ModalChiTietItem style={{ flex: "1" }}>
                                             <FormSpan>Giới tính:</FormSpan>
-                                            <FormInput type="text" value={customer.customerGender} readOnly />
+                                            <FormInput type="text" value={customer.customerGender != null ? customer.customerGender : "Chưa cập nhật"} readOnly />
                                         </ModalChiTietItem>
                                     </div>
                                 </div>
                                 <div style={{ display: "flex", flex: "1" }}>
                                     <ModalChiTietItem style={{ flex: "1", marginLeft: "26%" }}>
                                         <FormSpan>Địa chỉ khách hàng:</FormSpan>
-                                        <FormInput type="text" value={customer.customerAddress + wardNameDistrictNameCityName} readOnly />
+                                        <FormInput type="text" value={customer.customerAddress ? customer.customerAddress + wardNameDistrictNameCityName : "Chưa cập nhật"} readOnly />
                                     </ModalChiTietItem>
                                     <ModalChiTietItem style={{ flex: "1" }}>
                                         <FormSpan>Email:</FormSpan>
@@ -380,7 +380,7 @@ const Modal = ({ showModal, setShowModal, type, customer, setReRenderData, handl
                                     </ModalChiTietItem>
                                     <ModalChiTietItem style={{ flex: "1" }}>
                                         <FormSpan>Số điện thoại:</FormSpan>
-                                        <FormInput type="text" value={customer.customerPhone} readOnly />
+                                        <FormInput type="text" value={customer.customerPhone ? customer.customerPhone : "Chưa cập nhật"} readOnly />
                                     </ModalChiTietItem>
                                 </div>
 

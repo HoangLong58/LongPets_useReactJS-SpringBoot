@@ -153,29 +153,13 @@ const PetRight = ({ reRenderData, setReRenderData }) => {
                         <h3 className="success" style={{ fontSize: "1.2rem" }}>{petQuantityCount}</h3>
                     </ItemRight>
                 </Item>
-                {
-                    admin
-                        ?
-                        // Chỉ admin với nv bán hàng mới được thêm thú cưng
-                        admin.machucvu === 5 || admin.machucvu === 1
-                            ?
-                            <>
-                                <Item className="add-product"
-                                    onClick={() => openModal({ type: "addPet" })}
-                                >
-                                    <Add />
-                                    <h3>Thêm thú cưng</h3>
-                                </Item>
-                            </>
-                            : null
-                        : null
-                }
-                {/* <Item className="add-product"
-                    onClick={() => openModal({ type: "themthucung" })}
+
+                <Item className="add-product"
+                    onClick={() => openModal({ type: "addPet" })}
                 >
                     <Add />
                     <h3>Thêm thú cưng</h3>
-                </Item> */}
+                </Item>
             </SalesAnalytics>
 
             {/* ==== MODAL ==== */}

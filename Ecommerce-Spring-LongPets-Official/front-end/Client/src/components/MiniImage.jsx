@@ -21,7 +21,7 @@ const MiniImage = ({ item }) => {
         };
         getImage();
     }, []);
-    // console.log(image.data[0])
+    // console.log(image.data)
     return (
         <Image src={image}></Image>
     )

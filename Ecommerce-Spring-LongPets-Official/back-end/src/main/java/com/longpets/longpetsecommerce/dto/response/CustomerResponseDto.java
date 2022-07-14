@@ -1,44 +1,42 @@
 package com.longpets.longpetsecommerce.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.longpets.longpetsecommerce.data.model.Order;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.data.model.Ward;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.*;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
-public interface CustomerResponseDto {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class CustomerResponseDto {
+    private Long customerId;
 
-    @Value("#{target.customer_id}")
-    Long getCustomerId();
+    private String customerEmail;
 
-    @Value("#{target.customer_email}")
-    String getCustomerEmail();
+    private String customerPassword;
 
-    @Value("#{target.customer_password}")
-    String getCustomerPassword();
+    private String customerName;
 
-    @Value("#{target.customer_name}")
-    String getCustomerName();
+    private Date customerBirthday;
 
-    @Value("#{target.customer_birthday}")
-    Date getCustomerBirthday();
+    private String customerGender;
 
-    @Value("#{target.customer_gender}")
-    String getCustomerGender();
+    private String customerPhone;
 
-    @Value("#{target.customer_phone}")
-    String getCustomerPhone();
+    private String customerAddress;
 
-    @Value("#{target.customer_address}")
-    String getCustomerAddress();
+    private String customerAvatar;
 
-    @Value("#{target.customer_avatar}")
-    String getCustomerAvatar();
+    private Ward wardCustomer;
 
-    @Value("#{target.ward_id}")
-    String getWardId();
+    private Collection<Role> roles = new ArrayList<>();
 
+    private List<Order> orders;
 }

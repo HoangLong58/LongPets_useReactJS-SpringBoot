@@ -415,33 +415,33 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
         setNewImage([]);
         const getPet = async () => {
             try {
-                const petRes = await axios.get(`http://localhost:8080/pet/get-pet-by-pet-id/${pet.petId}`);
+                const petRes = await axios.get(`http://localhost:8080/pet/${pet.petId}`);
                 setPetModal(petRes.data);
-                setPetModalCategoryId(petRes.data[0].categoryId);
-                setPetModalPetName(petRes.data[0].petName);
-                setPetModalPetGender(petRes.data[0].petGender);
-                setPetModalPetAge(petRes.data[0].petAge);
-                setPetModalPetVaccinated(petRes.data[0].petVaccinated);
-                setPetModalPetHealthWarranty(petRes.data[0].petHealthWarranty);
-                setPetModalPetTitle(petRes.data[0].petTitle);
-                setPetModalPetDescription(petRes.data[0].petDescription);
-                setPetModalPetNote(petRes.data[0].petNote);
-                setPetModalPetQuantity(petRes.data[0].petQuantity);
-                setPetModalPetPrice(petRes.data[0].petPrice);
-                setPetModalPetPriceDiscount(petRes.data[0].petPriceDiscount);
+                setPetModalCategoryId(petRes.data.categoryPet.categoryId);
+                setPetModalPetName(petRes.data.petName);
+                setPetModalPetGender(petRes.data.petGender);
+                setPetModalPetAge(petRes.data.petAge);
+                setPetModalPetVaccinated(petRes.data.petVaccinated);
+                setPetModalPetHealthWarranty(petRes.data.petHealthWarranty);
+                setPetModalPetTitle(petRes.data.petTitle);
+                setPetModalPetDescription(petRes.data.petDescription);
+                setPetModalPetNote(petRes.data.petNote);
+                setPetModalPetQuantity(petRes.data.petQuantity);
+                setPetModalPetPrice(petRes.data.petPrice);
+                setPetModalPetPriceDiscount(petRes.data.petPriceDiscount);
 
-                setPetModalCategoryIdOld(petRes.data[0].categoryId);
-                setPetModalPetNameOld(petRes.data[0].petName);
-                setPetModalPetGenderOld(petRes.data[0].petGender);
-                setPetModalPetAgeOld(petRes.data[0].petAge);
-                setPetModalPetVaccinatedOld(petRes.data[0].petVaccinated);
-                setPetModalPetHealthWarrantyOld(petRes.data[0].petHealthWarranty);
-                setPetModalPetTitleOld(petRes.data[0].petTitle);
-                setPetModalPetDescriptionOld(petRes.data[0].petDescription);
-                setPetModalPetNoteOld(petRes.data[0].petNote);
-                setPetModalPetQuantityOld(petRes.data[0].petQuantity);
-                setPetModalPetPriceOld(petRes.data[0].petPrice);
-                setPetModalPetPriceDiscountOld(petRes.data[0].petPriceDiscount);
+                setPetModalCategoryIdOld(petRes.data.categoryPet.categoryId);
+                setPetModalPetNameOld(petRes.data.petName);
+                setPetModalPetGenderOld(petRes.data.petGender);
+                setPetModalPetAgeOld(petRes.data.petAge);
+                setPetModalPetVaccinatedOld(petRes.data.petVaccinated);
+                setPetModalPetHealthWarrantyOld(petRes.data.petHealthWarranty);
+                setPetModalPetTitleOld(petRes.data.petTitle);
+                setPetModalPetDescriptionOld(petRes.data.petDescription);
+                setPetModalPetNoteOld(petRes.data.petNote);
+                setPetModalPetQuantityOld(petRes.data.petQuantity);
+                setPetModalPetPriceOld(petRes.data.petPrice);
+                setPetModalPetPriceDiscountOld(petRes.data.petPriceDiscount);
             } catch (err) {
                 console.log("Lỗi lấy danh mục: ", err);
             }
@@ -449,8 +449,8 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
         const getImage = async () => {
             try {
                 setPetModalPetImage([]);
-                const imageRes = await axios.get(`http://localhost:8080/pet/get-all-pet-image/${pet.petId}`);
-                imageRes.data.map((pet, index) => {
+                // const imageRes = await axios.get(`http://localhost:8080/pet/get-all-pet-image/${pet.petId}`);
+                pet.images.map((pet, index) => {
                     setPetModalPetImage(prev => {
                         const isHave = petModalImage.includes(pet.imageContent);
                         if (isHave) {
@@ -489,8 +489,8 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
     useEffect(() => {
         const getImageUpdate = async () => {
             try {
-                const imageRes = await axios.get(`http://localhost:8080/pet/get-all-pet-image/${pet.petId}`);
-                setPetModalPetImage(imageRes.data);
+                // const imageRes = await axios.get(`http://localhost:8080/pet/get-all-pet-image/${pet.petId}`);
+                setPetModalPetImage(pet.images);
             } catch (err) {
                 console.log("Lỗi lấy hình ảnh thú cưng: ", err);
             }
@@ -678,7 +678,7 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
         console.log("mang hinh: ", newImageArray);
     }
 
-    const handleThempet = async (
+    const handleAddPet = async (
         { newCategoryId,
             newPetName,
             newPetGender,
@@ -739,13 +739,14 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
                         petPriceDiscount: newPetPriceDiscount,
                         petImage: newImage
                     }
-                );
-                console.log("KQ trả về update: ", insertPetRes);
-                setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx
-                setShowModal(prev => !prev);
-                const dataShow = { message: "Thêm thú cưng " + newPetName + " thành công!", type: "success" };
-                showToastFromOut(dataShow);
-                setNewImage([]);  //Làm rỗng mảng hình
+                ).then(() => {
+                    console.log("KQ trả về update: ", insertPetRes);
+                    setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx
+                    setShowModal(prev => !prev);
+                    const dataShow = { message: "Thêm thú cưng " + newPetName + " thành công!", type: "success" };
+                    showToastFromOut(dataShow);
+                    setNewImage([]);  //Làm rỗng mảng hình
+                });
             } catch (err) {
                 console.log("Lỗi insert: ", err);
                 setReRenderData(prev => !prev); //Render lại csdl ở Compo cha là - categoryMain & categoryRight.jsx
@@ -838,7 +839,7 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
                                     </ModalChiTietItem>
                                     <ModalChiTietItem style={{ flex: "1" }}>
                                         <FormSpan>Danh mục:</FormSpan>
-                                        <FormInput type="text" value={pet.categoryName} readOnly />
+                                        <FormInput type="text" value={pet.categoryPet.categoryName} readOnly />
                                     </ModalChiTietItem>
                                 </div>
                                 <div style={{ display: "flex" }}>
@@ -1020,7 +1021,7 @@ const Modal = ({ showModal, setShowModal, type, pet, setReRenderData, handleClos
                             <ButtonUpdate>
                                 <ButtonContainer>
                                     <ButtonClick
-                                        onClick={() => handleThempet({
+                                        onClick={() => handleAddPet({
                                             newCategoryId: newCategoryId,
                                             newPetName: newPetName,
                                             newPetGender: newPetGender,
