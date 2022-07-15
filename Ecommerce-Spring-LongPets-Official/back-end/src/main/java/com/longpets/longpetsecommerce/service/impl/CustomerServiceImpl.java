@@ -8,8 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.longpets.longpetsecommerce.data.model.Category;
 import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Role;
+import com.longpets.longpetsecommerce.data.model.Ward;
 import com.longpets.longpetsecommerce.data.repository.CustomerRepository;
 import com.longpets.longpetsecommerce.data.repository.RoleRepository;
+import com.longpets.longpetsecommerce.data.repository.WardRepository;
+import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
 import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdateCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.response.*;
@@ -49,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final WardRepository wardRepository;
     private final ModelMapper modelMapper;
 
 
@@ -144,35 +148,35 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 //        return customerRepository.save(customer);
 //    }
 
-    @Override
-    public MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone) {
-        MessageResponseDto messageResponseDto = new MessageResponseDto();
+//    @Override
+//    public MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone) {
+//        MessageResponseDto messageResponseDto = new MessageResponseDto();
+//
+//        List<CustomerItfResponseDto> customerItfResponseDtos = customerRepository.checkCustomerPhone(customerId, customerPhone);
+//        if(customerItfResponseDtos.isEmpty()) {
+//            messageResponseDto.setMessage("Unregistered phone number");
+//        } else {
+//            messageResponseDto.setMessage("Registered phone number");
+//        }
+//        return messageResponseDto;
+//    }
 
-        List<CustomerItfResponseDto> customerItfResponseDtos = customerRepository.checkCustomerPhone(customerId, customerPhone);
-        if(customerItfResponseDtos.isEmpty()) {
-            messageResponseDto.setMessage("Unregistered phone number");
-        } else {
-            messageResponseDto.setMessage("Registered phone number");
-        }
-        return messageResponseDto;
-    }
-
-    @Override
-    public void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto) {
-        try {
-            customerRepository.updateCustomer(updateCustomerRequestDto.getWardId(),
-                    updateCustomerRequestDto.getCustomerName(),
-                    updateCustomerRequestDto.getCustomerBirthday(),
-                    updateCustomerRequestDto.getCustomerGender(),
-                    updateCustomerRequestDto.getCustomerPhone(),
-                    updateCustomerRequestDto.getCustomerAddress(),
-                    updateCustomerRequestDto.getCustomerAvatar(),
-                    updateCustomerRequestDto.getCustomerId());
-        }
-        catch (Exception e) {
-            throw new ApiRequestException("Error when update customer");
-        }
-    }
+//    @Override
+//    public void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto) {
+//        try {
+//            customerRepository.updateCustomer(updateCustomerRequestDto.getWardId(),
+//                    updateCustomerRequestDto.getCustomerName(),
+//                    updateCustomerRequestDto.getCustomerBirthday(),
+//                    updateCustomerRequestDto.getCustomerGender(),
+//                    updateCustomerRequestDto.getCustomerPhone(),
+//                    updateCustomerRequestDto.getCustomerAddress(),
+//                    updateCustomerRequestDto.getCustomerAvatar(),
+//                    updateCustomerRequestDto.getCustomerId());
+//        }
+//        catch (Exception e) {
+//            throw new ApiRequestException("Error when update customer");
+//        }
+//    }
 
 //    @Override
 //    public CustomerResponseDto findCustomerByCustomerIdd(Long customerId) {
@@ -199,19 +203,19 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 //        return customerRepository.getCustomerQuantity();
 //    }
 
-    @Override
-    public void deleteCustomer(Long customerId) {
-        try {
-            customerRepository.deleteCustomerRole(customerId);
-            try {
-                customerRepository.deleteCustomer(customerId);
-            } catch (Exception exception) {
-                throw new ApiRequestException("Error when delete  user");
-            }
-        } catch (Exception exception) {
-            throw new ApiRequestException("Error when delete role user");
-        }
-    }
+//    @Override
+//    public void deleteCustomer(Long customerId) {
+//        try {
+//            customerRepository.deleteCustomerRole(customerId);
+//            try {
+//                customerRepository.deleteCustomer(customerId);
+//            } catch (Exception exception) {
+//                throw new ApiRequestException("Error when delete  user");
+//            }
+//        } catch (Exception exception) {
+//            throw new ApiRequestException("Error when delete role user");
+//        }
+//    }
 
     @Override
     public WardDistrictCityResponseDto getWardDistrictCity(String wardId) {
@@ -220,7 +224,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 //    =========================================== FIX ===============================================
     @Override
     public List<CustomerResponseDto> getAllCustomer() {
-        List<Customer> customers = customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAllByCustomerIdNot(0L);
         List<CustomerResponseDto> customerResponseDtos = modelMapper.map(customers,
                 new TypeToken<List<CustomerResponseDto>>() {
                 }.getType());
@@ -250,7 +254,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     public CustomerCountResponseDto getCustomerCount() {
         Long customerCount = customerRepository.count();
         CustomerCountResponseDto customerCountResponseDto = new CustomerCountResponseDto();
-        customerCountResponseDto.setCustomerQuantity(customerCount);
+        customerCountResponseDto.setCustomerQuantity(customerCount - 1);
         return customerCountResponseDto;
     }
 
@@ -343,5 +347,53 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
                 .orElseThrow(() -> new ResourceNotFoundException("Can't find customer with email "+ customerEmail));
         CustomerResponseDto customerResponseDto = modelMapper.map(customer, CustomerResponseDto.class);
         return customerResponseDto;
+    }
+
+    @Override
+    public MessageResponseDto checkCustomerPhone(String customerPhone, Long customerId) {
+        MessageResponseDto messageResponseDto = new MessageResponseDto();
+        List<Customer> customers = customerRepository.findCustomersByCustomerPhone(customerPhone);
+        if(customers.isEmpty()) {
+            messageResponseDto.setMessage("Unregistered phone number");
+        } else {
+            Long isFindCustomerId = customers.get(0).getCustomerId();
+            if(isFindCustomerId == customerId) {
+                messageResponseDto.setMessage("Unregistered phone number");
+            } else {
+                messageResponseDto.setMessage("Registered phone number");
+            }
+        }
+        return messageResponseDto;
+    }
+
+    @Override
+    public CustomerResponseDto updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto) {
+//        Get customerId and wardId param
+        Long customerId = updateCustomerRequestDto.getCustomerId();
+        String wardId = updateCustomerRequestDto.getWardId();
+//        Find customer
+        Customer customer = customerRepository.findCustomerByCustomerId(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Can't find customer by customer id " + customerId));
+        String customerEmailFind = customer.getCustomerEmail();
+        String customerPasswordFind = customer.getCustomerPassword();
+//        Find ward
+        Ward ward = wardRepository.findById(wardId)
+                .orElseThrow(() -> new ResourceNotFoundException("Can't find ward by ward id " + wardId));
+        customer.setWardCustomer(ward);
+//        map with updateCustomerRequestDto
+        modelMapper.map(updateCustomerRequestDto, customer);
+//        set email, password and save database
+        customer.setCustomerEmail(customerEmailFind);
+        customer.setCustomerPassword(customerPasswordFind);
+        customer = customerRepository.save(customer);
+        System.out.println("CUSTOMER:"+customer.toString());
+//        map return customerResponseDto
+        CustomerResponseDto customerResponseDto = modelMapper.map(customer, CustomerResponseDto.class);
+        return customerResponseDto;
+    }
+
+    @Override
+    public void deleteCustomer(Long customerId) {
+        customerRepository.deleteById(customerId);
     }
 }

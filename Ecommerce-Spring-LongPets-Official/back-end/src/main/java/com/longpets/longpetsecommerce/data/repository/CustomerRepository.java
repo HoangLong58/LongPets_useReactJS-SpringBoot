@@ -18,16 +18,16 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //    Customer findByCustomerEmail(String customerEmail);
 
-    @Query(value = "select customer_id, customer_email, customer_password, customer_name, customer_birthday, customer_gender, customer_phone, customer_address, customer_avatar, ward_id from customer where customer_id != 0 AND customer_id != ? AND customer_phone = ?;",
-            nativeQuery = true)
-    List<CustomerItfResponseDto> checkCustomerPhone(Long customerId, String customerPhone);
+//    @Query(value = "select customer_id, customer_email, customer_password, customer_name, customer_birthday, customer_gender, customer_phone, customer_address, customer_avatar, ward_id from customer where customer_id != 0 AND customer_id != ? AND customer_phone = ?;",
+//            nativeQuery = true)
+//    List<CustomerItfResponseDto> checkCustomerPhone(Long customerId, String customerPhone);
 
 
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query(value = "update customer set ward_id = ?, customer_name = ?, customer_birthday = ?, customer_gender = ?, customer_phone = ?, customer_address = ?, customer_avatar = ? where customer_id = ?;",
-            nativeQuery = true)
-    void updateCustomer(String wardId, String customerName, Date customerBirthday, String customerGender, String customerPhone, String customerAddress, String customerAvatar, Long customerId);
+//    @Transactional
+//    @Modifying(clearAutomatically = true)
+//    @Query(value = "update customer set ward_id = ?, customer_name = ?, customer_birthday = ?, customer_gender = ?, customer_phone = ?, customer_address = ?, customer_avatar = ? where customer_id = ?;",
+//            nativeQuery = true)
+//    void updateCustomer(String wardId, String customerName, Date customerBirthday, String customerGender, String customerPhone, String customerAddress, String customerAvatar, Long customerId);
 
 //    @Query(value = "select customer_id, customer_email, customer_password, customer_name, customer_birthday, customer_gender, customer_phone, customer_address, customer_avatar, ward_id from customer where customer_id = ?;",
 //            nativeQuery = true)
@@ -49,29 +49,31 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //            nativeQuery = true)
 //    CustomerQuantityResponseDto getCustomerQuantity();
 
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query(value = "delete from customer where customer_id = ?;",
-            nativeQuery = true)
-    void deleteCustomer(Long customerId);
+//    @Transactional
+//    @Modifying(clearAutomatically = true)
+//    @Query(value = "delete from customer where customer_id = ?;",
+//            nativeQuery = true)
+//    void deleteCustomer(Long customerId);
 
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query(value = "delete from customer_role where customer_id = ?;",
-            nativeQuery = true)
-    void deleteCustomerRole(Long customerId);
+//    @Transactional
+//    @Modifying(clearAutomatically = true)
+//    @Query(value = "delete from customer_role where customer_id = ?;",
+//            nativeQuery = true)
+//    void deleteCustomerRole(Long customerId);
 
     @Query(value = "select w.ward_id, w.ward_name, w.ward_type, d.district_id, d.district_name, d.district_type, c.city_id, c.city_name, c.city_type from ward w join district d on w.district_id = d.district_id join city c on d.city_id = c.city_id where w.ward_id = ?",
             nativeQuery = true)
     WardDistrictCityResponseDto getWardDistrictCity(String wardId);
 
 //    =========================================== FIX ===============================================
-    List<Customer> findAll();
+//    List<Customer> findAll();
+List<Customer> findAllByCustomerIdNot(Long customerId);
 
     Optional<Customer> findCustomerByCustomerId(Long customerId);
 
     List<Customer> findCustomerByCustomerNameContaining(String customerName);
 
     Optional<Customer> findCustomerByCustomerEmail(String customerEmail);
+    List<Customer> findCustomersByCustomerPhone(String customerPhone);
 
 }

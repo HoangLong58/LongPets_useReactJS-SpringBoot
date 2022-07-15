@@ -21,9 +21,9 @@ public interface CustomerService {
 //    Customer registerCustomer(RegisterRequestDto customer);
 //    void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
-    MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone);
+//    MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone);
 
-    void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto);
+//    void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto);
 
 //    CustomerResponseDto findCustomerByCustomerIdd(Long customerId);
 
@@ -34,7 +34,7 @@ public interface CustomerService {
 
 //    CustomerQuantityResponseDto getCustomerQuantity();
 
-    void deleteCustomer(Long customerId);
+//    void deleteCustomer(Long customerId);
 
     WardDistrictCityResponseDto getWardDistrictCity(String wardId);
 
@@ -58,5 +58,11 @@ public interface CustomerService {
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
     CustomerResponseDto findCustomerByCustomerEmail(String customerEmail);
+
+    MessageResponseDto checkCustomerPhone(String customerPhone, Long customerId);
+
+    CustomerResponseDto updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto);
+
+    void deleteCustomer(Long customerId);
 
 }

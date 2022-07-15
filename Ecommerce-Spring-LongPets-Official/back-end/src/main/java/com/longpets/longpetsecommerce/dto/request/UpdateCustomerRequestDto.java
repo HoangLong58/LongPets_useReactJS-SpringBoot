@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.longpets.longpetsecommerce.data.model.Order;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.data.model.Ward;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,7 +13,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UpdateCustomerRequestDto {
     @NotNull(message = "customerId can't be empty")
     @Min(value = 0, message = "customerId can't be negative")

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -64,15 +65,15 @@ public class CustomerController {
 //        customerService.refreshToken(request, response);
 //    }
 
-    @GetMapping("/check-customer-phone/{customerId}-{customerPhone}")
-    public MessageResponseDto checkCustomerPhone(@PathVariable(value = "customerId") Long customerId, @PathVariable(value = "customerPhone") String customerPhone) {
-        return customerService.checkCustomerPhone(customerId, customerPhone);
-    };
+//    @GetMapping("/check-customer-phone/{customerId}-{customerPhone}")
+//    public MessageResponseDto checkCustomerPhone(@PathVariable(value = "customerId") Long customerId, @PathVariable(value = "customerPhone") String customerPhone) {
+//        return customerService.checkCustomerPhone(customerId, customerPhone);
+//    };
 
-    @PutMapping("/update-customer")
-    public void updateCustomer(@Valid @RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
-        customerService.updateCustomer(updateCustomerRequestDto);
-    }
+//    @PutMapping("/update-customer")
+//    public void updateCustomer(@Valid @RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
+//        customerService.updateCustomer(updateCustomerRequestDto);
+//    }
 
 //    @GetMapping("/find-customer/{customerId}")
 //    public CustomerResponseDto findCustomerByCustomerId(@PathVariable(value = "customerId") Long customerId) {
@@ -160,5 +161,15 @@ public class CustomerController {
     @GetMapping("/find-customer-by-emailCustomer/{customerEmail}")
     public CustomerResponseDto findCustomerByCustomerEmail(@PathVariable(value = "customerEmail") @NotNull String customerEmail) {
        return customerService.findCustomerByCustomerEmail(customerEmail);
+    }
+
+    @GetMapping("/check-customer-phone/{customerPhone}-{customerId}")
+    public MessageResponseDto checkCustomerPhone(@PathVariable(value = "customerPhone") @NotNull String customerPhone, @PathVariable(value = "customerId") @NotNull @Min(0) Long customerId) {
+        return customerService.checkCustomerPhone(customerPhone, customerId);
+    };
+
+    @PutMapping("/update-customer")
+    public void updateCustomer(@Valid @RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
+        customerService.updateCustomer(updateCustomerRequestDto);
     }
 }

@@ -109,7 +109,7 @@ const RightTop = () => {
             <Profile>
                 <Info>
                     <p>Hey, <b>{admin.employeeName}</b></p>
-                    <Small className="text-muted">{admin.position_id === 1 ? "Nhân viên bán hàng" : admin.position_id === 2 ? "Nhân viên tư vấn" : admin.position_id === 3 ? "Nhân viên kế toán" : admin.position_id === 4 ? "Nhân viên kho và vận chuyển" : admin.position_id === 5 ? "Admin" : null}</Small>
+                    <Small className="text-muted">ADMIN</Small>
                 </Info>
                 <ProfilePhoto>
                     <Img src={admin.employeeAvatar} />
