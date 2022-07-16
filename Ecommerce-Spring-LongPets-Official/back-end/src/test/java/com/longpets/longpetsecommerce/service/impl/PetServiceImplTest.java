@@ -6,7 +6,10 @@ import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.repository.CategoryRepository;
 import com.longpets.longpetsecommerce.data.repository.ImageRepository;
 import com.longpets.longpetsecommerce.data.repository.PetRepository;
+import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
 import com.longpets.longpetsecommerce.dto.request.NewPetRequestDto;
+import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
+import com.longpets.longpetsecommerce.dto.response.PetCountResponseDto;
 import com.longpets.longpetsecommerce.dto.response.PetNameResponseDto;
 import com.longpets.longpetsecommerce.dto.response.PetResponseDto;
 import com.longpets.longpetsecommerce.exception.ResourceNotFoundException;
@@ -26,37 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class PetServiceImplTest {
-
-//    private Category category;
-//    private Optional<Category> categoryOptional;
-//    private Pet pet;
-//    private List<Pet> pets;
-//    private List<String> petNames;
-//    private PetNameResponseDto petNameResponseDto;
-//    private List<PetNameResponseDto> petNameResponseDtos;
-//    private PetServiceImpl petServiceImpl;
-//    private CategoryRepository categoryRepository;
-//    private PetRepository petRepository;
-//
-//    @BeforeEach
-//    void setting() {
-//        categoryRepository = mock(CategoryRepository.class);
-//        petRepository = mock(PetRepository.class);
-//
-//        category = mock(Category.class);
-//        categoryOptional = Optional.of(category);
-//
-//        pet = mock(Pet.class);
-//        pets = List.of(pet);
-//
-//        petNames = mock(List.class);
-//
-//        petNameResponseDto = mock(PetNameResponseDto.class);
-//        petNameResponseDtos = List.of(petNameResponseDto);
-//
-//        petServiceImpl = mock(PetServiceImpl.class);
-//    }
-
     @Test
     public void addPet_WhenNewPetRequestDtoValid_Expect_ReturnPetResponseDto() {
         ModelMapper modelMapper = mock(ModelMapper.class);
@@ -67,28 +39,34 @@ public class PetServiceImplTest {
 
         Image image = mock(Image.class);
         List<Image> images = List.of(image);
-        Pet pet = mock(Pet.class);
         Category category = mock(Category.class);
         Optional<Category> categoryOptional = Optional.of(category);
         NewPetRequestDto newPetRequestDto = mock(NewPetRequestDto.class);
 
-        PetResponseDto petResponseDto = mock(PetResponseDto.class);
-
-        PetResponseDto actualPetResponseDto = petService.addPet(newPetRequestDto);
-
         when(categoryRepository.findCategoryByCategoryId(newPetRequestDto.getCategoryId()))
                 .thenReturn(categoryOptional);
-        when(modelMapper.map(newPetRequestDto, Pet.class))
-                .thenReturn(pet);
-
+        Pet pet = modelMapper.map(newPetRequestDto, Pet.class);
         when(petRepository.saveAndFlush(pet))
                 .thenReturn(pet);
         when(categoryRepository.findCategoryByCategoryId(newPetRequestDto.getCategoryId()))
                 .thenReturn(categoryOptional);
 
-        when(modelMapper.map(pet, PetResponseDto.class)).thenReturn(petResponseDto);
+        PetResponseDto petResponseDtoExpect = modelMapper.map(pet, PetResponseDto.class);
+        PetResponseDto petResponseDtoActual = petService.addPet(newPetRequestDto);
 
-        assertThat(petResponseDto).isEqualTo(actualPetResponseDto);
+        assertThat(petResponseDtoActual).isEqualTo(petResponseDtoExpect);
+    }
+
+    @Test
+    public void addPet_WhenNewPetRequestDtoInValid_Expect_ReturnResourceNotFoundException() {
+        NewPetRequestDto newPetRequestDto = mock(NewPetRequestDto.class);
+        PetServiceImpl petService = mock(PetServiceImpl.class);
+
+        when(petService.addPet(newPetRequestDto)).thenThrow(new ResourceNotFoundException("Can't find category by category 1"));
+        Exception exception = Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> petService.addPet(newPetRequestDto));
+
+        assertThat(exception.getMessage()).isEqualTo("Can't find category by category 1");
     }
 
     @Test
@@ -106,12 +84,54 @@ public class PetServiceImplTest {
     public void getPetAndCategoryByPetId_WhenPetIdValid_Expect_ReturnPetResponseDto() {
         ModelMapper modelMapper = mock(ModelMapper.class);
         PetRepository petRepository = mock(PetRepository.class);
-        PetResponseDto petResponseDtoExpect = mock(PetResponseDto.class);
+//        PetResponseDto petResponseDto = mock(PetResponseDto.class);
         Pet pet = mock(Pet.class);
         PetServiceImpl petService = mock(PetServiceImpl.class);
 
         when(petRepository.findPetByPetId(1L)).thenReturn(Optional.of(pet));
-        when(modelMapper.map(pet, PetResponseDto.class)).thenReturn(petResponseDtoExpect);
-        assertThat(petResponseDtoExpect).isEqualTo(petService.getPetAndCategoryByPetId(1L));
+        PetResponseDto petResponseDtoExpect = modelMapper.map(pet, PetResponseDto.class);
+        PetResponseDto petResponseDtoActual = petService.getPetAndCategoryByPetId(1L);
+
+        assertThat(petResponseDtoActual).isEqualTo(petResponseDtoExpect);
+    }
+
+    @Test
+    public void getPetCount_Expect_ReturnPetCountResponseDto() {
+        PetRepository petRepository = mock(PetRepository.class);
+        PetServiceImpl petService = mock(PetServiceImpl.class);
+
+        when(petRepository.count()).thenReturn(1L);
+        PetCountResponseDto countResponseDtoExpect = new PetCountResponseDto(1L);
+        when(petService.getPetCount()).thenReturn(new PetCountResponseDto(1L));
+
+        assertThat(petService.getPetCount().getPetQuantityCount()).isEqualTo(countResponseDtoExpect.getPetQuantityCount());
+    }
+
+    @Test
+    public void updatePet_WhenUpdatePetRequestDtoValid_ReturnPetResponseDto() {
+        PetRepository petRepository = mock(PetRepository.class);
+        Pet pet = mock(Pet.class);
+        ModelMapper modelMapper = mock(ModelMapper.class);
+        UpdatePetRequestDto updatePetRequestDto = mock(UpdatePetRequestDto.class);
+        PetServiceImpl petService = mock(PetServiceImpl.class);
+
+        when(petRepository.findPetByPetId(1L)).thenReturn(Optional.of(pet));
+        modelMapper.map(updatePetRequestDto, pet);
+        when(petRepository.save(pet)).thenReturn(pet);
+        PetResponseDto petResponseDtoExpect = modelMapper.map(pet, PetResponseDto.class);
+        PetResponseDto petResponseDtoActual = petService.updatePet(updatePetRequestDto);
+
+        assertThat(petResponseDtoActual).isEqualTo(petResponseDtoExpect);
+    }
+
+    @Test
+    public void updatePet_WhenUpdatePetRequestDtoInValid_ReturnResourceNotFoundException() {
+        PetServiceImpl petService = mock(PetServiceImpl.class);
+        UpdatePetRequestDto updatePetRequestDto = mock(UpdatePetRequestDto.class);
+
+        when(petService.updatePet(updatePetRequestDto)).thenThrow(new ResourceNotFoundException("Can't find pet id 1"));
+        Exception exception = Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> petService.updatePet(updatePetRequestDto));
+        assertThat(exception.getMessage()).isEqualTo("Can't find pet id 1");
     }
 }

@@ -242,7 +242,7 @@ public class PetServiceImpl implements PetService {
 //        Set categoryPet
         Long categoryId = newPetRequestDto.getCategoryId();
         Category category = categoryRepository.findCategoryByCategoryId(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Can't find category id" + categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Can't find category id " + categoryId));
         Pet pet = modelMapper.map(newPetRequestDto, Pet.class);
         pet.setCategoryPet(category);
 
