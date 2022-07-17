@@ -1,33 +1,24 @@
 package com.longpets.longpetsecommerce.service.impl;
 
 import com.longpets.longpetsecommerce.data.model.Category;
-import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.repository.CategoryRepository;
-import com.longpets.longpetsecommerce.data.repository.PetRepository;
 import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
-import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
 import com.longpets.longpetsecommerce.dto.response.CategoryCountDto;
 import com.longpets.longpetsecommerce.dto.response.CategoryResponseDto;
-import com.longpets.longpetsecommerce.dto.response.PetCountResponseDto;
-import com.longpets.longpetsecommerce.dto.response.PetResponseDto;
 import com.longpets.longpetsecommerce.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.security.core.parameters.P;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class CategoryServiceImplTest {
-//    TODO: need fix
+    //    TODO: need fix
     @Test
     public void getAllCategory_WhenNewPetRequestDtoValid_ReturnListCategoryResponseDto() {
         CategoryServiceImpl categoryService = mock(CategoryServiceImpl.class);
@@ -37,7 +28,8 @@ public class CategoryServiceImplTest {
 
         when(categoryRepository.findAll()).thenReturn(categories);
         List<CategoryResponseDto> categoriesExpect = modelMapper.map(categories,
-                new TypeToken<List<CategoryResponseDto>>() {}.getType());
+                new TypeToken<List<CategoryResponseDto>>() {
+                }.getType());
         List<CategoryResponseDto> categoriesActual = categoryService.getAllCategory();
 
         assertThat(categoriesActual).isEqualTo(categoriesExpect);

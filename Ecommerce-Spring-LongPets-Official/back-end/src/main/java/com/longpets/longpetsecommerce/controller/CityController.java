@@ -1,6 +1,5 @@
 package com.longpets.longpetsecommerce.controller;
 
-import com.longpets.longpetsecommerce.data.repository.CityRepository;
 import com.longpets.longpetsecommerce.dto.response.AllCityResponseDto;
 import com.longpets.longpetsecommerce.service.CityService;
 import lombok.RequiredArgsConstructor;

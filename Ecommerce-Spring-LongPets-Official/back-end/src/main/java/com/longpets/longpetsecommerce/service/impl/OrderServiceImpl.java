@@ -1,6 +1,5 @@
 package com.longpets.longpetsecommerce.service.impl;
 
-import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.repository.OrderRepository;
 import com.longpets.longpetsecommerce.dto.request.AddOrderCartRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AddOrderRequestDto;

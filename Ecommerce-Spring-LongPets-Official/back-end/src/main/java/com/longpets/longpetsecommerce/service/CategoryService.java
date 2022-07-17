@@ -7,23 +7,6 @@ import com.longpets.longpetsecommerce.dto.response.*;
 import java.util.List;
 
 public interface CategoryService {
-//    public List<CategoryResponseDto> getAllCategory();
-
-//    List<AllPetOfCategoryResponseDto> getAllPetOfCategoryByCategoryId(Long categoryId);
-
-//    List<AllPetOfCategoryResponseDto> getAllPetOfCategory();
-
-//    List<CategoryFindByCategoryNameResponseDto> getAllCategoryByCategoryName(String categoryName);
-
-//    CategoryQuantityResponseDto getCategoryCategoryQuantity();
-
-//    Category updateCategory(CategoryUpdateRequestDto categoryUpdateRequestDto);
-
-//    List<CategoryFindByCategoryIdResponseDto> findCategoryByCategoryId(Long categoryId);
-
-//    void addCategory(String categoryName, String categoryTitle, String categoryImage);
-
-//    void deleteCategory(Long categoryId);
 
 //    =================================== FIX ====================================
     List<CategoryResponseDto> getAllCategory();

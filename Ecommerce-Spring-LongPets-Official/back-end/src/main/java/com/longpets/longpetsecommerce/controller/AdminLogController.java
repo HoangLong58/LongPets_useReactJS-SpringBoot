@@ -2,7 +2,6 @@ package com.longpets.longpetsecommerce.controller;
 
 import com.longpets.longpetsecommerce.dto.request.AdminLogUpdateDto;
 import com.longpets.longpetsecommerce.dto.response.AdminLogResponseDto;
-import com.longpets.longpetsecommerce.data.model.AdminLog;
 import com.longpets.longpetsecommerce.service.AdminLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

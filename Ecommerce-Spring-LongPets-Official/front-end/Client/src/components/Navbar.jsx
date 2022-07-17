@@ -373,14 +373,14 @@ const Navbar = () => {
                                             <NavbarUserItem>
                                                 <Link
                                                     style={{ textDecoration: "none", width: "100%" }}
-                                                    to='/capnhatthongtin'>
+                                                    to='/UpdateInfomationCustomer'>
                                                     <NavbarUserItemLi style={{ marginTop: "10px" }}>
                                                         Cập nhật thông tin
                                                     </NavbarUserItemLi>
                                                 </Link>
                                                 <Link
                                                     style={{ textDecoration: "none", color: "black" }}
-                                                    to='/donmua'>
+                                                    to='/OrderHistory'>
                                                     <NavbarUserItemLi>
                                                         Đơn mua của bạn
                                                     </NavbarUserItemLi>
@@ -408,46 +408,6 @@ const Navbar = () => {
                             )
                     }
                 </Right>
-                {/* <Link 
-                        style={{ textDecoration: "none", color: "black" }}
-                        to='/register'>
-                        <MenuItem>ĐĂNG KÝ</MenuItem>
-                    </Link>
-                    <Link
-                        style={{ textDecoration: "none", color: "black" }}
-                        to='/login'>
-                        <MenuItem>ĐĂNG NHẬP</MenuItem>
-                    </Link>
-                    // <MenuItem >
-                    //     <NavbarUser>
-                    //         <NavbarUserImage src="https://avatars.githubusercontent.com/u/96277352?s=400&u=cad895ff2f6ae2bd57b90ad02c6077d89bc9d55d&v=4"></NavbarUserImage>
-                    //         <NavbarUserName>Trương Hoàng Long</NavbarUserName>
-                    //         <NavbarUserMenu>
-                    //             <NavbarUserItem>
-                    //                 <Link
-                    //                     style={{ textDecoration: "none", width: "100%" }}
-                    //                     to='/capnhatthongtin'>
-                    //                     <NavbarUserItemLi style={{marginTop: "10px"}}>
-                    //                         Cập nhật thông tin
-                    //                     </NavbarUserItemLi>
-                    //                 </Link>
-                    //                 <Link
-                    //                     style={{ textDecoration: "none", color: "black" }}
-                    //                     to='/donmua'>
-                    //                     <NavbarUserItemLi>
-                    //                         Đơn mua của bạn
-                    //                     </NavbarUserItemLi>
-                    //                 </Link>
-                    //                 <NavbarUserItemLi>Đăng xuất</NavbarUserItemLi>
-                    //             </NavbarUserItem>
-                    //         </NavbarUserMenu>
-                    //     </NavbarUser>
-                    // </MenuItem>
-                    <MenuItem >
-                        <MiniCart>
-                        </MiniCart>
-                    </MenuItem>
-                </Right>*/}
                 <MenuItem >
                     <MiniCart>
                     </MiniCart>

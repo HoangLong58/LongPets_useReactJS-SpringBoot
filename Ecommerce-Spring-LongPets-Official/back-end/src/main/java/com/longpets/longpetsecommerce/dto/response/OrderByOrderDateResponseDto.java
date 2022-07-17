@@ -1,13 +1,8 @@
 package com.longpets.longpetsecommerce.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.longpets.longpetsecommerce.data.model.*;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public interface OrderByOrderDateResponseDto {
     @Value("#{target.order_id}")

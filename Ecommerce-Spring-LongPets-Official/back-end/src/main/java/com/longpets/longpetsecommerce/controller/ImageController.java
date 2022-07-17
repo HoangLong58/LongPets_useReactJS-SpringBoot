@@ -1,10 +1,8 @@
 package com.longpets.longpetsecommerce.controller;
 
-import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.dto.response.PetImageResponseDto;
 import com.longpets.longpetsecommerce.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

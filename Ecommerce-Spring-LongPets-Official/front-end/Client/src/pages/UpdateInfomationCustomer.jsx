@@ -208,7 +208,7 @@ const Avatar = styled.img`
     object-fit: contain;
 `
 
-const CapNhatThongTin = () => {
+const UpdateInfomationCustomer = () => {
   // User từ redux
   const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch(); //Để gọi hàm từ redux updateInfo
@@ -346,7 +346,7 @@ const CapNhatThongTin = () => {
   }
 
   // XỬ LÝ CẬP NHẬT
-  const CapNhatThongTin = async ({
+  const UpdateInfomationCustomer = async ({
     customerId,
     wardId,
     customerName,
@@ -580,7 +580,7 @@ const CapNhatThongTin = () => {
             <ButtonContainer>
               <Button
                 onClick={() => {
-                  CapNhatThongTin({
+                  UpdateInfomationCustomer({
                     customerId: customerId,
                     wardId: wardId,
                     customerName: customerName,
@@ -614,4 +614,4 @@ const CapNhatThongTin = () => {
   );
 };
 
-export default CapNhatThongTin;
+export default UpdateInfomationCustomer;

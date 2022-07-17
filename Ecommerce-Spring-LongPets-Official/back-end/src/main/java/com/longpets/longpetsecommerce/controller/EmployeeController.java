@@ -1,12 +1,9 @@
 package com.longpets.longpetsecommerce.controller;
 
-import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Employee;
 import com.longpets.longpetsecommerce.data.model.Role;
-import com.longpets.longpetsecommerce.dto.request.AddRoleToCustomerRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AddRoleToEmployeeRequestDto;
 import com.longpets.longpetsecommerce.dto.request.AdminRegisterRequestDto;
-import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.response.EmployeeResponseDto;
 import com.longpets.longpetsecommerce.service.EmployeeService;
 import lombok.RequiredArgsConstructor;

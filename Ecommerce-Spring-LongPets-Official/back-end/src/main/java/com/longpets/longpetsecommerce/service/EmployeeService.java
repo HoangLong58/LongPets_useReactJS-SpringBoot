@@ -1,10 +1,8 @@
 package com.longpets.longpetsecommerce.service;
 
-import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Employee;
 import com.longpets.longpetsecommerce.data.model.Role;
 import com.longpets.longpetsecommerce.dto.request.AdminRegisterRequestDto;
-import com.longpets.longpetsecommerce.dto.request.RegisterRequestDto;
 import com.longpets.longpetsecommerce.dto.response.EmployeeResponseDto;
 
 import javax.servlet.http.HttpServletRequest;

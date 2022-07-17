@@ -12,29 +12,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CustomerService {
-//    Customer saveCustomer(Customer customer);
-//    Role saveRole(Role role);
-//    void addRoleToCustomer(String emailCustomer, String roleName);
-//    Customer getCustomer(String emailCustomer);
-//    List<Customer> getCustomers();
-
-//    Customer registerCustomer(RegisterRequestDto customer);
-//    void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
-
-//    MessageResponseDto checkCustomerPhone(Long customerId, String customerPhone);
-
-//    void updateCustomer(UpdateCustomerRequestDto updateCustomerRequestDto);
-
-//    CustomerResponseDto findCustomerByCustomerIdd(Long customerId);
-
-//    CustomerItfResponseDto findCustomerByCustomerEmail(String customerEmail);
-
-//    List<CustomerItfResponseDto> getCustomer();
-//    List<CustomerItfResponseDto> getCustomerByCustomerName(String customerName);
-
-//    CustomerQuantityResponseDto getCustomerQuantity();
-
-//    void deleteCustomer(Long customerId);
 
     WardDistrictCityResponseDto getWardDistrictCity(String wardId);
 

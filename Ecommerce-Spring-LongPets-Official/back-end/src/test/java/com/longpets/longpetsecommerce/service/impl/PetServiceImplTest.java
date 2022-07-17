@@ -6,26 +6,19 @@ import com.longpets.longpetsecommerce.data.model.Pet;
 import com.longpets.longpetsecommerce.data.repository.CategoryRepository;
 import com.longpets.longpetsecommerce.data.repository.ImageRepository;
 import com.longpets.longpetsecommerce.data.repository.PetRepository;
-import com.longpets.longpetsecommerce.dto.request.CategoryUpdateRequestDto;
 import com.longpets.longpetsecommerce.dto.request.NewPetRequestDto;
 import com.longpets.longpetsecommerce.dto.request.UpdatePetRequestDto;
 import com.longpets.longpetsecommerce.dto.response.PetCountResponseDto;
-import com.longpets.longpetsecommerce.dto.response.PetNameResponseDto;
 import com.longpets.longpetsecommerce.dto.response.PetResponseDto;
 import com.longpets.longpetsecommerce.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class PetServiceImplTest {

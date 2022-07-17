@@ -9,8 +9,8 @@ import Pay from "./pages/Pay";
 import Success from "./pages/Success";
 import "./css/main.css";
 import { useSelector } from "react-redux";
-import CapNhatThongTin from "./pages/CapNhatThongTin";
-import DonMua from "./pages/DonMua";
+import UpdateInfomationCustomer from "./pages/UpdateInfomationCustomer";
+import OrderHistory from "./pages/OrderHistory";
 import LoginRegister from "./pages/LoginRegister";
 import Order from "./pages/Order";
 
@@ -31,8 +31,8 @@ const App = () => {
         <Route path="/success" element={<Success />} />
         <Route path='/order' element={cart.length > 0 ? <Order /> : <Home />} />
 
-        <Route path="/capnhatthongtin" element={user ? <CapNhatThongTin /> : <Navigate to="/" />} />
-        <Route path="/donmua" element={user ? <DonMua /> : <Navigate to="/" />} />
+        <Route path="/UpdateInfomationCustomer" element={user ? <UpdateInfomationCustomer /> : <Navigate to="/" />} />
+        <Route path="/OrderHistory" element={user ? <OrderHistory /> : <Navigate to="/" />} />
       </Routes>
     </Router>
   );

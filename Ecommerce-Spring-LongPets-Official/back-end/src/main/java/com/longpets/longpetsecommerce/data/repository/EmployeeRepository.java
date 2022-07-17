@@ -1,6 +1,5 @@
 package com.longpets.longpetsecommerce.data.repository;
 
-import com.longpets.longpetsecommerce.data.model.Customer;
 import com.longpets.longpetsecommerce.data.model.Employee;
 import com.longpets.longpetsecommerce.dto.response.EmployeeResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;

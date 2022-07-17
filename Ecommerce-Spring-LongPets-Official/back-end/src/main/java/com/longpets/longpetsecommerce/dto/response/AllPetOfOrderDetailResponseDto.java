@@ -1,10 +1,7 @@
 package com.longpets.longpetsecommerce.dto.response;
 
-import com.longpets.longpetsecommerce.data.model.Order;
-import com.longpets.longpetsecommerce.data.model.Pet;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.*;
 
 public interface AllPetOfOrderDetailResponseDto {
     @Value("#{target.pet_id}")

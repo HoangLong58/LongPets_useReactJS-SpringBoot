@@ -17,12 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
-
-import static java.util.Arrays.stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,75 +27,6 @@ import static java.util.Arrays.stream;
 @RequestMapping("/customer")
 public class CustomerController {
     private final CustomerService customerService;
-
-//    @GetMapping("/users")
-//    public ResponseEntity<List<Customer>>getCustomers() {
-//        return ResponseEntity.ok().body(customerService.getCustomers());
-//    }
-
-//    @PostMapping("/user/save")
-//    public ResponseEntity<Customer>saveCustomer(@RequestBody Customer customer) {
-//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/customer/user/save").toUriString());
-//        return ResponseEntity.created(uri).body(customerService.saveCustomer(customer));
-//    }
-//
-//    @PostMapping("/role/save")
-//    public ResponseEntity<Role>saveRole(@RequestBody Role role) {
-//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/customer/role/save").toUriString());
-//        return ResponseEntity.created(uri).body(customerService.saveRole(role));
-//    }
-//
-//    @PostMapping("/role/add-to-user")
-//    public ResponseEntity<?>addRoleToUser(@Valid @RequestBody AddRoleToCustomerRequestDto roleToUserForm) {
-//        customerService.addRoleToCustomer(roleToUserForm.getCustomerEmail(), roleToUserForm.getRoleName());
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<?>registerCustomer(@Valid @RequestBody RegisterRequestDto customer) {
-//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/register").toUriString());
-//        return ResponseEntity.created(uri).body(customerService.registerCustomer(customer));
-//    }
-//
-//    @GetMapping("/token/refresh")
-//    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        customerService.refreshToken(request, response);
-//    }
-
-//    @GetMapping("/check-customer-phone/{customerId}-{customerPhone}")
-//    public MessageResponseDto checkCustomerPhone(@PathVariable(value = "customerId") Long customerId, @PathVariable(value = "customerPhone") String customerPhone) {
-//        return customerService.checkCustomerPhone(customerId, customerPhone);
-//    };
-
-//    @PutMapping("/update-customer")
-//    public void updateCustomer(@Valid @RequestBody UpdateCustomerRequestDto updateCustomerRequestDto) {
-//        customerService.updateCustomer(updateCustomerRequestDto);
-//    }
-
-//    @GetMapping("/find-customer/{customerId}")
-//    public CustomerResponseDto findCustomerByCustomerId(@PathVariable(value = "customerId") Long customerId) {
-//       return customerService.findCustomerByCustomerIdd(customerId);
-//    }
-
-//    @GetMapping("/find-customer-by-emailCustomer/{customerEmail}")
-//    public CustomerItfResponseDto findCustomerByCustomerEmail(@PathVariable(value = "customerEmail") String customerEmail) {
-//       return customerService.findCustomerByCustomerEmail(customerEmail);
-//    }
-
-//    @GetMapping("/get-customer")
-//    public List<CustomerItfResponseDto> getCustomer() {
-//        return customerService.getCustomer();
-//    }
-
-//    @GetMapping("/get-customer-by-customer-name/{customerName}")
-//    public List<CustomerItfResponseDto> getCustomerByCustomerName(@PathVariable(value = "customerName") String customerName) {
-//        return customerService.getCustomerByCustomerName(customerName);
-//    }
-
-//    @GetMapping("/get-customer-quantity")
-//    public CustomerQuantityResponseDto getCustomerQuantity() {
-//        return customerService.getCustomerQuantity();
-//    }
 
     @PutMapping("/delete-customer/{customerId}")
     public void deleteCustomer(@PathVariable(value = "customerId") Long customerId) {

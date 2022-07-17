@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
-import DatMuaImage from '../components/DatMuaImage';
+import OrderImage from '../components/OrderImage';
 import Navbar from '../components/Navbar';
 import "../css/main.css";
 import format_money from "../utils"
@@ -393,7 +393,7 @@ const Order = () => {
                                     cart.products.map((pet, key) => {
                                         return (
                                             <Carousel.Item>
-                                                <DatMuaImage item={pet.data.petId}></DatMuaImage>
+                                                <OrderImage item={pet.data.petId}></OrderImage>
                                             </Carousel.Item>
                                         );
                                     })

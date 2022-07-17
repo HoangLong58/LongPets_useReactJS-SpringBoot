@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Image = styled.img`
     width: 100%;
 `
-const DatMuaImage = ({ item }) => {
+const OrderImage = ({ item }) => {
     const [image, setImage] = useState([]);
     useEffect(() => {
         const getImage = async () => {
@@ -14,7 +14,7 @@ const DatMuaImage = ({ item }) => {
                 setImage(petImage.data[0].imageContent);
                 console.log(petImage.data[0].imageContent);
             } catch(err) {
-                console.log("Lay datmuaimage that bai");
+                console.log("Lay OrderImage that bai");
             }
         };
         getImage();
@@ -24,4 +24,4 @@ const DatMuaImage = ({ item }) => {
     )
 }
 
-export default DatMuaImage
+export default OrderImage

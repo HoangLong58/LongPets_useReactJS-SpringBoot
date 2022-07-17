@@ -95,7 +95,7 @@ outline:none;
 z-index: 2;
 cursor: pointer;
 `
-const DonMua = () => {
+const OrderHistory = () => {
   // Lấy user từ Redux User
   const user = useSelector(state => state.user.currentUser);
 
@@ -302,4 +302,4 @@ const DonMua = () => {
   );
 };
 
-export default DonMua
+export default OrderHistory
